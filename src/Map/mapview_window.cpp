@@ -1,7 +1,7 @@
 #include <QQuickView>
 
-#include "mapviewwindow.h"
-#include "ui_mapviewwindow.h"
+#include "MapviewWindow.h"
+#include "ui_mapview_window.h"
 
 MapViewWindow::MapViewWindow(QWidget *parent)
     : QDialog(parent)

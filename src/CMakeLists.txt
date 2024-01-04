@@ -4,9 +4,9 @@ qt6_add_executable(ActivityExplorer
     MANUAL_FINALIZATION
     ${TS_FILES}
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+    main_window.cpp
+    MainWindow.h
+    main_window.ui
 )
 
 set (QML_SOURCES "")

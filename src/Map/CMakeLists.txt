@@ -8,9 +8,9 @@ add_qml_files(
 )
 
 target_sources(ActivityExplorer PRIVATE
-    "${dir}/mapviewwindow.h"
-    "${dir}/mapviewwindow.cpp"
-    "${dir}/mapviewwindow.ui"
+    "${dir}/MapviewWindow.h"
+    "${dir}/mapview_window.cpp"
+    "${dir}/mapview_window.ui"
 )
 
 
