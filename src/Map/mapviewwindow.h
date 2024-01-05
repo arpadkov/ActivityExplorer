@@ -1,5 +1,4 @@
-#ifndef MAPVIEWWINDOW_H
-#define MAPVIEWWINDOW_H
+#pragma once
 
 #include <QDialog>
 
@@ -19,4 +18,3 @@ private:
     Ui::MapViewWindow *ui;
 };
 
-#endif // MAPVIEWWINDOW_H

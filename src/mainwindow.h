@@ -1,7 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
-//#include <QMainWindow>
 #include <QtWidgets/QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -25,4 +23,4 @@ public slots:
     void openMap();
 
 };
-#endif // MAINWINDOW_H
+

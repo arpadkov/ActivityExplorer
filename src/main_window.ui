@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>514</width>
     <height>600</height>
    </rect>
   </property>
@@ -14,11 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="_map_button">
+   <widget class="QPushButton" name="test_button">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>250</y>
+      <x>670</x>
+      <y>500</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -33,12 +33,24 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>514</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuMen">
+    <property name="title">
+     <string>Menü</string>
+    </property>
+    <addaction name="act_setup_data_provider"/>
+   </widget>
+   <addaction name="menuMen"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="act_setup_data_provider">
+   <property name="text">
+    <string>Setup data provider</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
