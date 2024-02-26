@@ -21,6 +21,7 @@ endforeach()
 endmacro()
 
 add_subdirectory(DataProvider)
+add_subdirectory(HttpClient)
 add_subdirectory(Map)
 
 qt_add_qml_module(ActivityExplorer

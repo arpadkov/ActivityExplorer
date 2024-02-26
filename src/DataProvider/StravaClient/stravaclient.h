@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DataProvider/DataProvider.h>
+#include <HttpClient/HttpClient.h>
 
 #include <QString>
 
