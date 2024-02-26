@@ -20,7 +20,7 @@ private:
     Ui::MainWindow *ui;
 
 public slots:
-    void openMap();
+    void testFunction();
 
 };
 

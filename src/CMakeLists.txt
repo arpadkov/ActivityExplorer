@@ -33,6 +33,7 @@ qt_add_qml_module(ActivityExplorer
 
 target_link_libraries(ActivityExplorer PUBLIC
     Qt6::Widgets
+    Qt6::WebEngineWidgets
     Qt6::Core
     Qt6::Gui
     Qt6::Location

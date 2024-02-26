@@ -10,6 +10,5 @@ target_sources(ActivityExplorer PRIVATE
     "${dir}/setup_data_provider.ui"
 )
 
-add_subdirectory(
-    StravaClient
-)
+add_subdirectory(StravaClient)
+add_subdirectory(LocalFilesProvider)

@@ -1,23 +1,38 @@
 #pragma once
 
-#include <QObject>
+#include <DataProvider/DataProvider.h>
+
 #include <QString>
 
 // Forwards
 class QNetworkReply;
+class QWidget;
 
 namespace StravaClient
 {
 
-class StravaClient : public QObject
+const QString AUTH_URL = "https://www.strava.com/oauth/token";
+const QString STRAVA_CLIENT_FOLDER = "StravaClient";
+const QString USER_DATA_FILE = "user_data.json";
+
+const QString CLIENT_ID = "client_id";
+const QString CLIENT_SECRET = "client_secret";
+const QString ACCESS_TOKEN = "access_token";
+const QString REFRESH_TOKEN = "refresh_token";
+const QString AUTH_CODE = "code";
+
+const QString GRANT_TYPE = "grant_type";
+const QString AUTH_CODE_TYPE = "authorization_code";
+
+class StravaClient : public DataProviderSetup::DataProvider
 {
-Q_OBJECT
 
 public:
 	StravaClient();
 
-public slots:
-	void getAllActivities();
+	bool initilize() override;
+	QWidget* createSetupWidget() override;
+	QString getType() override;
 
 private:
 	bool readUserData();

@@ -17,7 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="data_provider_combobox"/>
      </item>
      <item>
       <spacer name="verticalSpacer">

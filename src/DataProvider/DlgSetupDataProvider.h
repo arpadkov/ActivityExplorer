@@ -16,7 +16,14 @@ public:
     SetupDataProviderDialog(QWidget* parent = nullptr);
     ~SetupDataProviderDialog();
 
+    void addSetupWidget(QWidget* setup_w);
+
+private slots:
+    void onProviderChanged();
+
 private:
     Ui::SetupDataProviderDialog* ui;
+
+    QWidget* _setup_w;
 
 };

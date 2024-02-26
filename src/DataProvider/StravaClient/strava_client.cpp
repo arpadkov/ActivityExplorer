@@ -1,29 +1,23 @@
 #include "StravaClient.h"
+#include "StravaSetupWidget.h"
 
 #include <QByteArray>
 #include <QDir>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLineEdit>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStandardPaths>
 #include <QUrl>
 #include <QUrlQuery>
 
+
 namespace StravaClient
 {
 
-const QString AUTH_URL = "https://www.strava.com/oauth/token";
-const QString STRAVA_CLIENT_FOLDER = "StravaClient";
-const QString USER_DATA_FILE = "user_data.json";
-
-const QString CLIENT_ID = "client_id";
-const QString CLIENT_SECRET = "client_secret";
-const QString REFRESH_TOKEN = "refresh_token";
-const QString ACCESS_TOKEN = "access_token";
-
-StravaClient::StravaClient()
+StravaClient::StravaClient() : DataProviderSetup::DataProvider()
 {
 	qInfo("(StravaClient): Constructor");
 
@@ -33,11 +27,28 @@ StravaClient::StravaClient()
 	getAccessToken();
 }
 
+bool StravaClient::initilize()
+{
+	return false;
+}
+
+QWidget* StravaClient::createSetupWidget()
+{
+	return new StravaSetupWidget();
+}
+
+QString StravaClient::getType()
+{
+	return DataProviderSetup::STRAVA_CLIENT;
+}
+
 bool StravaClient::readUserData()
 {
 	QFile file(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE);
 	if (!file.open(QIODevice::ReadOnly))
 		return false;
+
+	qInfo() << "FILENAME: " << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
 
 	auto bytes = file.readAll();
 	file.close();
@@ -72,7 +83,9 @@ bool StravaClient::readUserData()
 
 bool StravaClient::getAccessToken()
 {
-	QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+	QNetworkAccessManager* manager = new QNetworkAccessManager();
+
+	// TODO handle network rerplies with signal, and do not wait for them in main thread
 	QObject::connect(manager, &QNetworkAccessManager::finished, this, [this](QNetworkReply* reply)
 		{
 			if (reply->error() != QNetworkReply::NoError)
@@ -94,21 +107,17 @@ bool StravaClient::getAccessToken()
 	query.addQueryItem(CLIENT_ID, _client_id);
 	query.addQueryItem(CLIENT_SECRET, _client_secret);
 	query.addQueryItem(REFRESH_TOKEN, _refresh_token);
-	query.addQueryItem("grant_type", REFRESH_TOKEN);
+	query.addQueryItem(GRANT_TYPE, REFRESH_TOKEN);
 	auth_url.setQuery(query);
 
 	QNetworkRequest request = QNetworkRequest(auth_url);
 
-	auto x = manager->post(request, QByteArray());
-	x->waitForReadyRead(5000);
+	auto reply = manager->post(request, QByteArray());
+
+	reply->deleteLater();
 
 
-	return false;
-}
-
-void StravaClient::getAllActivities()
-{
-	return;
+	return true;
 }
 
 
