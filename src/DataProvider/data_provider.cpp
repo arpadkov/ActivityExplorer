@@ -13,7 +13,7 @@ DataProvider::DataProvider()
 }
 
 /*
-* Opens a dialog, where the type of the FataProvider can be selected, and configured
+* Opens a dialog, where the type of the DataProvider can be selected, and configured
 */
 void configureDataProvider()
 {

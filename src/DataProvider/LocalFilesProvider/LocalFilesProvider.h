@@ -14,7 +14,7 @@ class LocalFilesProvider : public DataProviderSetup::DataProvider
 public:
 	LocalFilesProvider();
 
-	bool initilize() override;
+	void initilize() override;
 	QWidget* createSetupWidget() override;
 	QString getType() override;
 };

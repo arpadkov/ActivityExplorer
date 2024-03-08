@@ -13,8 +13,6 @@ namespace StravaClient
 {
 
 const QString AUTH_URL = "https://www.strava.com/oauth/token";
-const QString STRAVA_CLIENT_FOLDER = "StravaClient";
-const QString USER_DATA_FILE = "user_data.json";
 
 const QString CLIENT_ID = "client_id";
 const QString CLIENT_SECRET = "client_secret";
@@ -31,12 +29,12 @@ class StravaClient : public DataProviderSetup::DataProvider
 public:
 	StravaClient();
 
-	bool initilize() override;
+	void initilize() override;
 	QWidget* createSetupWidget() override;
 	QString getType() override;
 
 private:
-	bool readUserData();
+	//bool readUserData();
 	bool getAccessToken();
 
 	QString _client_id;			// Stored locally and entered manuall

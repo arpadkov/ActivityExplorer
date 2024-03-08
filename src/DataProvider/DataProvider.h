@@ -15,7 +15,8 @@ Q_OBJECT
 public:
 	DataProvider();
 
-	virtual bool initilize() = 0;
+	/* TODO: call this from DataProvider() constructor and allow+handle exceptions in initialize() */
+	virtual void initilize() = 0;
 	virtual QWidget* createSetupWidget() = 0;
 	virtual QString getType() = 0;
 };
