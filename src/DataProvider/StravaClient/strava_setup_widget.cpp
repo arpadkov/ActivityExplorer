@@ -31,6 +31,11 @@ StravaSetupWidget::StravaSetupWidget(QWidget *parent)
 StravaSetupWidget::~StravaSetupWidget()
 {}
 
+bool StravaSetupWidget::isConfigured() const
+{
+	return !(ui->client_id_edit->text().isEmpty() || ui->client_secret_edit->text().isEmpty() || ui->refresh_token_edit->text().isEmpty() || ui->authentication_code_edit->text().isEmpty());
+}
+
 /* Write StravaCredentials */
 void StravaSetupWidget::onAccepted()
 {

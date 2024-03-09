@@ -25,6 +25,7 @@ public:
     ~SetupDataProviderDialog();
 
     void addSetupWidget(DataProviderSetupWidget* setup_w);
+    void cleanSetupWidget();
 
 private slots:
     void onProviderChanged();
@@ -44,6 +45,8 @@ class DataProviderSetupWidget : public QWidget
 public:
     DataProviderSetupWidget(QWidget* parent = nullptr) {};
     ~DataProviderSetupWidget() {};
+
+    virtual bool isConfigured() const = 0;
 
 public Q_SLOTS:
     virtual void onAccepted() = 0;

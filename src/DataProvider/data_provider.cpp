@@ -4,9 +4,21 @@
 #include <DataProvider/StravaClient/StravaClient.h>
 #include <DataProvider/LocalFilesProvider/LocalFilesProvider.h>
 
+#include <QDir>
+#include <QStandardPaths>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 namespace Providers
 {
+
+const QString DATA_PROVIDER_CONFIG_FILE = "data_provider_config.json";
+
+QString getDataProviderLocation()
+{
+	return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
 
 DataProvider::DataProvider()
 {
@@ -48,6 +60,49 @@ std::shared_ptr<DataProvider> getDataProvider(QString type)
 	qInfo() << "(DataProvider) Provider of type does not exist: " << type;
 	return nullptr;
 }
+
+DataProviderConfiguration::DataProviderConfiguration()
+{
+}
+
+DataProviderConfiguration::DataProviderConfiguration(const QString& configured_provider_) : _configured_provider(configured_provider_)
+{
+}
+
+DataProviderConfiguration::~DataProviderConfiguration()
+{
+}
+
+bool DataProviderConfiguration::writeConfig()
+{
+	if (_configured_provider.isEmpty())
+	{
+		qInfo() << "(DataProviderConfiguration) Trying to write empty config";
+		return false;
+	}
+
+	QFile file(getDataProviderLocation() + QDir::separator() + DATA_PROVIDER_CONFIG_FILE);
+	if (!file.open(QIODevice::WriteOnly))
+		return false;
+
+	QJsonObject json_object;
+	json_object["configured_provider"] = _configured_provider;
+
+	QJsonDocument jso_doc(json_object);
+
+	file.write(jso_doc.toJson());
+	file.close();
+
+	qInfo() << "(DataProviderConfiguration) Provider config written to:  " << file.fileName();
+
+	return true;
+}
+
+QString DataProviderConfiguration::getConfiguredProviderType() const
+{
+	return _configured_provider;
+}
+
 
 
 } // namespace Providers

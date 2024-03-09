@@ -15,7 +15,7 @@ namespace
 {
 QString getStravaClientLocation()
 {
-	return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
+	return Providers::getDataProviderLocation() + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
 }
 }
 

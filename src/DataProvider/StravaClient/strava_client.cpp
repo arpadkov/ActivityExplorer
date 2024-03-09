@@ -31,7 +31,10 @@ bool StravaClient::initilize()
 	if (!credentials.readCredentials())
 		throw std::runtime_error("Could not read credentials");
 
-	setAccessToken(credentials);
+	if (!setAccessToken(credentials))
+		throw std::runtime_error("Could not set access token");
+
+	return true;
 }
 
 DataProviderSetupWidget* StravaClient::createSetupWidget()
