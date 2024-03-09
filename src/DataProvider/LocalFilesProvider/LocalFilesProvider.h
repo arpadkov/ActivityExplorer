@@ -5,17 +5,17 @@
 #include <QObject>
 #include <QString>
 
-namespace LocalFilesProvider
+namespace Providers::LocalFilesProvider
 {
 
-class LocalFilesProvider : public DataProviderSetup::DataProvider
+class LocalFilesProvider : public DataProvider
 {
 
 public:
 	LocalFilesProvider();
 
 	void initilize() override;
-	QWidget* createSetupWidget() override;
+	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
 };
 

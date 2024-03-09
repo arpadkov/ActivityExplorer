@@ -8,7 +8,7 @@
 #include <QJsonObject>
 #include <QStandardPaths>
 
-namespace StravaClient
+namespace Providers::StravaClient
 {
 
 namespace
@@ -71,12 +71,12 @@ bool StravaCredential::saveCredentials()
 	if (client_id.isEmpty() || client_secret.isEmpty() || refresh_token.isEmpty())
 	{
 		qInfo() << "Trying to write empty credentials";
-		return;
+		return false;
 	}
 
 	QFile file(getStravaClientLocation());
 	if (!file.open(QIODevice::ReadOnly))
-		return;
+		return false;
 
 	QJsonObject json_object;
 	json_object["client_id"] = client_id;
@@ -87,6 +87,8 @@ bool StravaCredential::saveCredentials()
 
 	file.write(jso_doc.toJson());
 	file.close();
+
+	return true;
 }
 
 

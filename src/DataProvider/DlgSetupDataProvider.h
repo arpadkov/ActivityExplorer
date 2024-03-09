@@ -2,11 +2,19 @@
 
 #include <QtWidgets/QDialog>
 
-QT_BEGIN_NAMESPACE
-namespace Ui {
-    class SetupDataProviderDialog;
+// Forwards
+namespace Ui
+{
+class SetupDataProviderDialog;
 }
-QT_END_NAMESPACE
+
+namespace Providers
+{
+class DataProviderSetupWidget;
+}
+
+namespace Providers
+{
 
 class SetupDataProviderDialog : public QDialog
 {
@@ -16,14 +24,26 @@ public:
     SetupDataProviderDialog(QWidget* parent = nullptr);
     ~SetupDataProviderDialog();
 
-    void addSetupWidget(QWidget* setup_w);
+    void addSetupWidget(DataProviderSetupWidget* setup_w);
 
 private slots:
     void onProviderChanged();
+    void accept();
 
 private:
     Ui::SetupDataProviderDialog* ui;
 
-    QWidget* _setup_w;
-
+    DataProviderSetupWidget* _setup_w;
 };
+
+
+class DataProviderSetupWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    DataProviderSetupWidget(QWidget* parent = nullptr) {};
+    ~DataProviderSetupWidget() {};
+};
+
+}

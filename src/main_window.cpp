@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(ui->act_setup_data_provider, &QAction::triggered, this, []()
         {
-            DataProviderSetup::configureDataProvider();
+            Providers::configureDataProvider();
         });
 
 

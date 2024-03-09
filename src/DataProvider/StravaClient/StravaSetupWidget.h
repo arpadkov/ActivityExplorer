@@ -1,24 +1,26 @@
 #pragma once
 
 #include <QWidget>
-#include "ui_strava_setup_widget.h"
+#include <DataProvider/DlgSetupDataProvider.h>
 
-QT_BEGIN_NAMESPACE
-namespace Ui {
-	class StravaSetupWidget;
+namespace Ui
+{
+class StravaSetupWidget;
 }
-QT_END_NAMESPACE
 
-namespace StravaClient
+namespace Providers::StravaClient
 {
 
-class StravaSetupWidget : public QWidget
+class StravaSetupWidget : public DataProviderSetupWidget
 {
 	Q_OBJECT
 
 public:
 	StravaSetupWidget(QWidget *parent = nullptr);
 	~StravaSetupWidget();
+
+public Q_SLOTS:
+
 
 private:
 	void setAuthorizationCode();
@@ -33,4 +35,4 @@ private:
 	 
 };
 
-}  // namespace StravaClient
+}  // namespace Providers::StravaClient

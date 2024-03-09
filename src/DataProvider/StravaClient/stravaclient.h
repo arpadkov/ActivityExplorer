@@ -1,7 +1,8 @@
 #pragma once
 
+#include "StravaCredentials.h"
+
 #include <DataProvider/DataProvider.h>
-#include <HttpClient/HttpClient.h>
 
 #include <QString>
 
@@ -9,7 +10,7 @@
 class QNetworkReply;
 class QWidget;
 
-namespace StravaClient
+namespace Providers::StravaClient
 {
 
 const QString AUTH_URL = "https://www.strava.com/oauth/token";
@@ -23,19 +24,20 @@ const QString AUTH_CODE = "code";
 const QString GRANT_TYPE = "grant_type";
 const QString AUTH_CODE_TYPE = "authorization_code";
 
-class StravaClient : public DataProviderSetup::DataProvider
+class StravaClient : public DataProvider
 {
 
 public:
 	StravaClient();
 
 	void initilize() override;
-	QWidget* createSetupWidget() override;
+	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
 
 private:
-	//bool readUserData();
 	bool getAccessToken();
+
+	StravaCredential _credentials;
 
 	QString _client_id;			// Stored locally and entered manuall
 	QString _client_secret;		// Stored locally and entered manuall
@@ -43,5 +45,5 @@ private:
 	QString _refresh_token;		// Stored locally and entered manuall
 };
 
-} // namespace StravaClient
+} // namespace Providers::StravaClient
 

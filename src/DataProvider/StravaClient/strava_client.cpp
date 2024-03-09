@@ -15,16 +15,12 @@
 #include <QUrlQuery>
 
 
-namespace StravaClient
+namespace Providers::StravaClient
 {
 
-StravaClient::StravaClient() : DataProviderSetup::DataProvider()
+StravaClient::StravaClient() : DataProvider()
 {
 	qInfo("(StravaClient): Constructor");
-
-	initilize();
-
-	getAccessToken();
 }
 
 void StravaClient::initilize()
@@ -33,55 +29,15 @@ void StravaClient::initilize()
 	credentials.readCredentials(); // TODO: save as class member
 }
 
-QWidget* StravaClient::createSetupWidget()
+DataProviderSetupWidget* StravaClient::createSetupWidget()
 {
 	return new StravaSetupWidget();
 }
 
 QString StravaClient::getType()
 {
-	return DataProviderSetup::STRAVA_CLIENT;
+	return STRAVA_CLIENT;
 }
-
-// TODO: DELETE
-//bool StravaClient::readUserData()
-//{
-//	QFile file(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE);
-//	if (!file.open(QIODevice::ReadOnly))
-//		return false;
-//
-//	qInfo() << "FILENAME: " << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
-//
-//	auto bytes = file.readAll();
-//	file.close();
-//
-//	QJsonParseError error;
-//	QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
-//	if (error.error != QJsonParseError::NoError)
-//	{
-//		qInfo() << "Could not open json: " << error.errorString();
-//		return false;
-//	}
-//
-//	if (!document.isObject())
-//	{
-//		qInfo() << "Json has wrong format";
-//		return false;
-//	}
-//
-//	auto json_obj = document.object();
-//	if (!json_obj.contains(CLIENT_ID) || !json_obj.contains(CLIENT_SECRET) || !json_obj.contains(REFRESH_TOKEN))
-//	{
-//		qInfo() << "User data is missing from json";
-//		return false;
-//	}
-//
-//	_client_id = json_obj.value(CLIENT_ID).toString();
-//	_client_secret = json_obj.value(CLIENT_SECRET).toString();
-//	_refresh_token = json_obj.value(REFRESH_TOKEN).toString();
-//
-//	return true;
-//}
 
 bool StravaClient::getAccessToken()
 {
@@ -123,4 +79,4 @@ bool StravaClient::getAccessToken()
 }
 
 
-} // namespace StravaClient
+} // namespace Providers::StravaClient

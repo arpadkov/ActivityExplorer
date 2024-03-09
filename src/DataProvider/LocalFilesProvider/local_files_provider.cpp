@@ -1,9 +1,9 @@
 #include "LocalFilesProvider.h"
 
-namespace LocalFilesProvider
+namespace Providers::LocalFilesProvider
 {
 
-LocalFilesProvider::LocalFilesProvider() : DataProviderSetup::DataProvider()
+LocalFilesProvider::LocalFilesProvider() : DataProvider()
 {
 	qInfo("(LocalFilesProvider): Constructor");
 }
@@ -12,14 +12,14 @@ void LocalFilesProvider::initilize()
 {
 }
 
-QWidget* LocalFilesProvider::createSetupWidget()
+DataProviderSetupWidget* LocalFilesProvider::createSetupWidget()
 {
 	return nullptr;
 }
 
 QString LocalFilesProvider::getType()
 {
-	return DataProviderSetup::LOCAL_PROVIDER;
+	return LOCAL_PROVIDER;
 }
 
 }

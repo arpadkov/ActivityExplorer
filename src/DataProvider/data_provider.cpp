@@ -5,7 +5,7 @@
 #include <DataProvider/LocalFilesProvider/LocalFilesProvider.h>
 
 
-namespace DataProviderSetup
+namespace Providers
 {
 
 DataProvider::DataProvider()
@@ -42,4 +42,4 @@ std::shared_ptr<DataProvider> getDataProvider(QString type)
 }
 
 
-} // namespace DataProvider
+} // namespace Providers

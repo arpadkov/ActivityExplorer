@@ -11,14 +11,16 @@
 #include <QUrl>
 #include <QUrlQuery>
 
+#include "ui_strava_setup_widget.h"
 
-namespace StravaClient
+
+namespace Providers::StravaClient
 {
 
 const QString GET_AUTH_CODE_URL = "http://www.strava.com/oauth/authorize?client_id=%1&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read,activity:read_all";
 
 StravaSetupWidget::StravaSetupWidget(QWidget *parent)
-	: QWidget(parent), ui(new Ui::StravaSetupWidget)
+	: DataProviderSetupWidget(parent), ui(new Ui::StravaSetupWidget)
 {
 	ui->setupUi(this);
 

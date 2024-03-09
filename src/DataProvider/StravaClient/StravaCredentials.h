@@ -2,7 +2,7 @@
 
 #include <QString>
 
-namespace StravaClient
+namespace Providers::StravaClient
 {
 
 const QString STRAVA_CLIENT_FOLDER = "StravaClient";
