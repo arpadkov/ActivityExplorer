@@ -33,6 +33,7 @@ void SetupDataProviderDialog::addSetupWidget(DataProviderSetupWidget* setup_w)
 void SetupDataProviderDialog::accept()
 {
     qInfo() << "ACCEPTED";
+    _setup_w->onAccepted();
     QDialog::accept();
 }
 

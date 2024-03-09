@@ -29,11 +29,11 @@ StravaCredential::StravaCredential() {};
 StravaCredential::~StravaCredential() {};
 
 
-void StravaCredential::readCredentials()
+bool StravaCredential::readCredentials()
 {
 	QFile file(getStravaClientLocation());
 	if (!file.open(QIODevice::ReadOnly))
-		return;
+		return false;
 
 	qInfo() << "FILENAME: " << getStravaClientLocation();
 
@@ -45,25 +45,27 @@ void StravaCredential::readCredentials()
 	if (error.error != QJsonParseError::NoError)
 	{
 		qInfo() << "Could not open json: " << error.errorString();
-		return;
+		return false;
 	}
 
 	if (!document.isObject())
 	{
 		qInfo() << "Json has wrong format";
-		return;
+		return false;
 	}
 
 	auto json_obj = document.object();
 	if (!json_obj.contains(CLIENT_ID) || !json_obj.contains(CLIENT_SECRET) || !json_obj.contains(REFRESH_TOKEN))
 	{
 		qInfo() << "User data is missing from json";
-		return;
+		return false;
 	}
 
 	client_id = json_obj.value(CLIENT_ID).toString();
 	client_secret = json_obj.value(CLIENT_SECRET).toString();
 	refresh_token = json_obj.value(REFRESH_TOKEN).toString();
+
+	return true;
 }
 
 bool StravaCredential::saveCredentials()
@@ -75,7 +77,7 @@ bool StravaCredential::saveCredentials()
 	}
 
 	QFile file(getStravaClientLocation());
-	if (!file.open(QIODevice::ReadOnly))
+	if (!file.open(QIODevice::WriteOnly))
 		return false;
 
 	QJsonObject json_object;
@@ -87,6 +89,8 @@ bool StravaCredential::saveCredentials()
 
 	file.write(jso_doc.toJson());
 	file.close();
+
+	qInfo() << "(StravaCredential) Credentials written to: " << file.fileName();
 
 	return true;
 }

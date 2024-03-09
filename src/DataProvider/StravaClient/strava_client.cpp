@@ -23,10 +23,15 @@ StravaClient::StravaClient() : DataProvider()
 	qInfo("(StravaClient): Constructor");
 }
 
-void StravaClient::initilize()
+/* Read credentials from file, and set refresh token
+  Can throw std::runtume_error */
+bool StravaClient::initilize()
 {
 	auto credentials = StravaCredential();
-	credentials.readCredentials(); // TODO: save as class member
+	if (!credentials.readCredentials())
+		throw std::runtime_error("Could not read credentials");
+
+	setAccessToken(credentials);
 }
 
 DataProviderSetupWidget* StravaClient::createSetupWidget()
@@ -39,7 +44,7 @@ QString StravaClient::getType()
 	return STRAVA_CLIENT;
 }
 
-bool StravaClient::getAccessToken()
+bool StravaClient::setAccessToken(const StravaCredential& credentials)
 {
 	QNetworkAccessManager* manager = new QNetworkAccessManager();
 
@@ -49,12 +54,12 @@ bool StravaClient::getAccessToken()
 			if (reply->error() != QNetworkReply::NoError)
 			{
 				qInfo() << "GOT REPLY WITH ERROR: " << reply->errorString();
-				return;
+				throw std::runtime_error(QString("Network reply error: %1").arg(reply->errorString()).toStdString());
 			}
 
 			QJsonObject json = QJsonDocument::fromJson(reply->readAll()).object();
 			if (!json.contains(ACCESS_TOKEN))
-				return;
+				throw std::runtime_error(QString("Reply did not contain access token").toStdString());
 
 			_access_token = json.value(ACCESS_TOKEN).toString();
 			qInfo() << "ACCESS TOKEN: " << _access_token;
@@ -62,9 +67,9 @@ bool StravaClient::getAccessToken()
 
 	QUrl auth_url = QUrl(AUTH_URL);
 	QUrlQuery query = QUrlQuery();
-	query.addQueryItem(CLIENT_ID, _client_id);
-	query.addQueryItem(CLIENT_SECRET, _client_secret);
-	query.addQueryItem(REFRESH_TOKEN, _refresh_token);
+	query.addQueryItem(CLIENT_ID, credentials.client_id);
+	query.addQueryItem(CLIENT_SECRET, credentials.client_secret);
+	query.addQueryItem(REFRESH_TOKEN, credentials.refresh_token);
 	query.addQueryItem(GRANT_TYPE, REFRESH_TOKEN);
 	auth_url.setQuery(query);
 

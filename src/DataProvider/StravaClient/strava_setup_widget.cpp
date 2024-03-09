@@ -1,6 +1,7 @@
 #include "StravaSetupWidget.h"
 
 #include "StravaClient.h"
+#include "StravaCredentials.h"
 
 #include <QDialog>
 #include <QJsonDocument>
@@ -24,20 +25,37 @@ StravaSetupWidget::StravaSetupWidget(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	QObject::connect(ui->authorize_button, &QPushButton::clicked, this, &StravaSetupWidget::setAuthorizationCode);
+	QObject::connect(ui->authorize_button, &QPushButton::clicked, this, &StravaSetupWidget::onAuthorize);
 }
 
 StravaSetupWidget::~StravaSetupWidget()
 {}
 
+/* Write StravaCredentials */
+void StravaSetupWidget::onAccepted()
+{
+	const QString& client_id = ui->client_id_edit->text();
+	const QString& client_secret = ui->client_secret_edit->text();
+	const QString& refresh_token = ui->refresh_token_edit->text();
+
+	StravaCredential credentials(client_id, client_secret, refresh_token);
+	credentials.saveCredentials();
+}
+
+void StravaSetupWidget::onAuthorize()
+{
+	fillAuthorizationCode();
+	fillRefreshToken();
+}
+
 /*
 * Opens a mini browser with the client id.
 * Returns the authorization code, which is used to get the refresh token.
 */
-void StravaSetupWidget::setAuthorizationCode()
+void StravaSetupWidget::fillAuthorizationCode()
 {
-	_client_id = ui->client_id_edit->text();
-	_client_secret = ui->client_secret_edit->text();
+	const QString& client_id = ui->client_id_edit->text();
+	const QString& client_secret = ui->client_secret_edit->text();
 
 	auto auth_dlg = QDialog();
 	auth_dlg.setWindowTitle("authorize strava access");
@@ -46,7 +64,7 @@ void StravaSetupWidget::setAuthorizationCode()
 	auth_dlg.setLayout(&layout);
 
 	auto web_view = QWebEngineView();
-	web_view.load(QUrl(GET_AUTH_CODE_URL.arg(_client_id)));
+	web_view.load(QUrl(GET_AUTH_CODE_URL.arg(client_id)));
 
 	layout.addWidget(&web_view);
 
@@ -72,20 +90,21 @@ void StravaSetupWidget::setAuthorizationCode()
 	}
 
 	ui->authentication_code_edit->setText(code);
-	_auth_code = code;
-
-	setRefreshToken();
 }
 
-void StravaSetupWidget::setRefreshToken()
+void StravaSetupWidget::fillRefreshToken()
 {
+	const QString& client_id = ui->client_id_edit->text();
+	const QString& client_secret = ui->client_secret_edit->text();
+	const QString& auth_code = ui->authentication_code_edit->text();
+
 	QNetworkAccessManager* manager = new QNetworkAccessManager();
 
 	QUrl auth_url = QUrl(AUTH_URL);
 	QUrlQuery query = QUrlQuery();
-	query.addQueryItem(CLIENT_ID, _client_id);
-	query.addQueryItem(CLIENT_SECRET, _client_secret);
-	query.addQueryItem(AUTH_CODE, _auth_code);
+	query.addQueryItem(CLIENT_ID, client_id);
+	query.addQueryItem(CLIENT_SECRET, client_secret);
+	query.addQueryItem(AUTH_CODE, auth_code);
 	query.addQueryItem(GRANT_TYPE, AUTH_CODE_TYPE);
 
 	auth_url.setQuery(query);
@@ -105,9 +124,8 @@ void StravaSetupWidget::setRefreshToken()
 			if (!json.contains(REFRESH_TOKEN))
 				return;
 
-			_refresh_token = json.value(ACCESS_TOKEN).toString();
-			ui->refresh_token_edit->setText(_refresh_token);
-			qInfo() << "REFRESH TOKEN: " << _refresh_token;
+			ui->refresh_token_edit->setText(json.value(ACCESS_TOKEN).toString());
+			qInfo() << "REFRESH TOKEN: " << json.value(ACCESS_TOKEN).toString();
 
 			reply->deleteLater();
 		});

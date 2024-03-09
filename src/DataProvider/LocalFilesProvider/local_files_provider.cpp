@@ -8,8 +8,9 @@ LocalFilesProvider::LocalFilesProvider() : DataProvider()
 	qInfo("(LocalFilesProvider): Constructor");
 }
 
-void LocalFilesProvider::initilize()
+bool LocalFilesProvider::initilize()
 {
+	return false;
 }
 
 DataProviderSetupWidget* LocalFilesProvider::createSetupWidget()

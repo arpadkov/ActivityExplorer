@@ -21,8 +21,10 @@ Q_OBJECT
 public:
 	DataProvider();
 
+	bool initilizeProvider();
+
 	/* TODO: call this from DataProvider() constructor and allow+handle exceptions in initialize() */
-	virtual void initilize() = 0;
+	virtual bool initilize() = 0;
 	virtual DataProviderSetupWidget* createSetupWidget() = 0;
 	virtual QString getType() = 0;
 };

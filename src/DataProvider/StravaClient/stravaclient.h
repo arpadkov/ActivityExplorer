@@ -12,6 +12,11 @@ class QWidget;
 
 namespace Providers::StravaClient
 {
+class StravaCredential;
+}
+
+namespace Providers::StravaClient
+{
 
 const QString AUTH_URL = "https://www.strava.com/oauth/token";
 
@@ -30,19 +35,14 @@ class StravaClient : public DataProvider
 public:
 	StravaClient();
 
-	void initilize() override;
+	bool initilize() override;
 	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
 
 private:
-	bool getAccessToken();
+	bool setAccessToken(const StravaCredential& credentials);
 
-	StravaCredential _credentials;
-
-	QString _client_id;			// Stored locally and entered manuall
-	QString _client_secret;		// Stored locally and entered manuall
 	QString _access_token;		// Stored only for the session
-	QString _refresh_token;		// Stored locally and entered manuall
 };
 
 } // namespace Providers::StravaClient

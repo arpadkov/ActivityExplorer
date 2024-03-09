@@ -19,17 +19,18 @@ public:
 	StravaSetupWidget(QWidget *parent = nullptr);
 	~StravaSetupWidget();
 
-public Q_SLOTS:
+	virtual void onAccepted() override;
 
 
 private:
-	void setAuthorizationCode();
-	void setRefreshToken();
+	void onAuthorize();
+	void fillAuthorizationCode();
+	void fillRefreshToken();
 
-	QString _client_id;
-	QString _client_secret;
-	QString _auth_code;
-	QString _refresh_token;
+	//QString _client_id;
+	//QString _client_secret;
+	//QString _auth_code;
+	//QString _refresh_token;
 
 	Ui::StravaSetupWidget* ui;
 	 

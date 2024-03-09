@@ -12,6 +12,19 @@ DataProvider::DataProvider()
 {
 }
 
+bool DataProvider::initilizeProvider()
+{
+	try
+	{
+		return initilize();
+	}
+	catch (std::exception ex)
+	{
+		qInfo() << "(DataProvider) Could not initialize provider: " << ex.what();
+		return false;
+	}
+}
+
 /*
 * Opens a dialog, where the type of the DataProvider can be selected, and configured
 */
@@ -19,11 +32,6 @@ void configureDataProvider()
 {
 	SetupDataProviderDialog* setup_dlg = new SetupDataProviderDialog();
 	setup_dlg->show();
-
-	//auto client = StravaClient::StravaClient();
-	//auto setup_w = client.createSetupWidget();
-
-	//setup_dlg->addSetupWidget(setup_w);
 }
 
 /*

@@ -44,6 +44,9 @@ class DataProviderSetupWidget : public QWidget
 public:
     DataProviderSetupWidget(QWidget* parent = nullptr) {};
     ~DataProviderSetupWidget() {};
+
+public Q_SLOTS:
+    virtual void onAccepted() = 0;
 };
 
 }
