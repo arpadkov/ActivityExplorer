@@ -3,6 +3,7 @@
 
 #include <DataProvider/StravaClient/StravaClient.h>
 #include <DataProvider/LocalFilesProvider/LocalFilesProvider.h>
+#include <Tools/ErrorDialog.h>
 
 #include <QDir>
 #include <QStandardPaths>
@@ -30,9 +31,17 @@ bool DataProvider::initilizeProvider()
 	{
 		return initilize();
 	}
+	catch (const ErrorDetail& err)
+	{
+		qInfo() << "(DataProvider) Could not initialize provider: " << err.getMessage();
+		ErrorDialog::showFrom(err);
+		return false;
+	}
+
 	catch (std::exception ex)
 	{
 		qInfo() << "(DataProvider) Could not initialize provider: " << ex.what();
+		ErrorDialog::showFrom(ErrorDetail(ex));
 		return false;
 	}
 }

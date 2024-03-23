@@ -34,6 +34,7 @@ class StravaClient : public DataProvider
 
 public:
 	StravaClient();
+	~StravaClient();
 
 	bool initilize() override;
 	DataProviderSetupWidget* createSetupWidget() override;

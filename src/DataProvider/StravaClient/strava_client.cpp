@@ -2,17 +2,10 @@
 #include "StravaSetupWidget.h"
 #include "StravaCredentials.h"
 
-#include <QByteArray>
-//#include <QDir>
-//#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
+#include <HttpClient/HttpClient.h>
+
 #include <QLineEdit>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-//#include <QStandardPaths>
-#include <QUrl>
-#include <QUrlQuery>
+
 
 
 namespace Providers::StravaClient
@@ -23,8 +16,13 @@ StravaClient::StravaClient() : DataProvider()
 	qInfo("(StravaClient): Constructor");
 }
 
+StravaClient::~StravaClient()
+{
+	qInfo("(StravaClient): Destructor");
+}
+
 /* Read credentials from file, and set refresh token
-  Can throw std::runtume_error */
+  Can throw std::runtime_error */
 bool StravaClient::initilize()
 {
 	auto credentials = StravaCredential();
@@ -49,40 +47,25 @@ QString StravaClient::getType()
 
 bool StravaClient::setAccessToken(const StravaCredential& credentials)
 {
-	QNetworkAccessManager* manager = new QNetworkAccessManager();
+	auto client = HttpClient::get();
 
-	// TODO handle network rerplies with signal, and do not wait for them in main thread
-	QObject::connect(manager, &QNetworkAccessManager::finished, this, [this](QNetworkReply* reply)
-		{
-			if (reply->error() != QNetworkReply::NoError)
-			{
-				qInfo() << "GOT REPLY WITH ERROR: " << reply->errorString();
-				throw std::runtime_error(QString("Network reply error: %1").arg(reply->errorString()).toStdString());
-			}
+	NetworkRequest request(AUTH_URL);
+	request.addQueryItem(CLIENT_ID, credentials.client_id);
+	request.addQueryItem(CLIENT_SECRET, credentials.client_secret);
+	request.addQueryItem(REFRESH_TOKEN, credentials.refresh_token);
+	request.addQueryItem(GRANT_TYPE, REFRESH_TOKEN);
 
-			QJsonObject json = QJsonDocument::fromJson(reply->readAll()).object();
-			if (!json.contains(ACCESS_TOKEN))
-				throw std::runtime_error(QString("Reply did not contain access token").toStdString());
+	ErrorDetail error;
+	auto reply = client->waitForReply(request, error, 15 * 1000);
+	if (!reply)
+		throw error;
 
-			_access_token = json.value(ACCESS_TOKEN).toString();
-			qInfo() << "ACCESS TOKEN: " << _access_token;
-		});
+	const auto& access_token = 	reply->getValue(ACCESS_TOKEN);
+	if (access_token.isEmpty())
+		throw std::runtime_error(QString("Reply did not contain access token").toStdString());
 
-	QUrl auth_url = QUrl(AUTH_URL);
-	QUrlQuery query = QUrlQuery();
-	query.addQueryItem(CLIENT_ID, credentials.client_id);
-	query.addQueryItem(CLIENT_SECRET, credentials.client_secret);
-	query.addQueryItem(REFRESH_TOKEN, credentials.refresh_token);
-	query.addQueryItem(GRANT_TYPE, REFRESH_TOKEN);
-	auth_url.setQuery(query);
-
-	QNetworkRequest request = QNetworkRequest(auth_url);
-
-	auto reply = manager->post(request, QByteArray());
-
-	reply->deleteLater();
-
-
+	_access_token = access_token;
+	qInfo() << "ACCESS TOKEN: " << _access_token;
 	return true;
 }
 

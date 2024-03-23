@@ -23,6 +23,7 @@ endmacro()
 add_subdirectory(DataProvider)
 add_subdirectory(HttpClient)
 add_subdirectory(Map)
+add_subdirectory(Tools)
 
 qt_add_qml_module(ActivityExplorer
     URI QmlForms

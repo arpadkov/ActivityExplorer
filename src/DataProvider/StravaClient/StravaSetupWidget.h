@@ -19,6 +19,8 @@ public:
 	StravaSetupWidget(QWidget *parent = nullptr);
 	~StravaSetupWidget();
 
+	void fillFromConfigFile();
+
 	virtual bool isConfigured() const override;
 
 	virtual void onAccepted() override;
@@ -26,8 +28,8 @@ public:
 
 private:
 	void onAuthorize();
-	void fillAuthorizationCode();
-	void fillRefreshToken();
+	bool fillAuthorizationCode();
+	bool fillRefreshToken();
 
 	bool _is_configured = false;
 

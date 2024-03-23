@@ -2,7 +2,7 @@
 #include <Map/mapviewwindow.h>
 #include <DataProvider/DataProvider.h>
 
-#include "./ui_main_window.h"
+#include "ui_main_window.h"
 
 #include <QDebug>
 
@@ -32,6 +32,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::testFunction()
 {
+    _provider = Providers::getDataProvider(Providers::STRAVA_CLIENT);
+
+    if (_provider)
+        _provider->initilizeProvider();
+
+
+
     //auto map_window = new MapViewWindow(this);
     //map_window->show();
 
