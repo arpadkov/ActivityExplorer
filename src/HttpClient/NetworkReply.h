@@ -23,5 +23,4 @@ public:
 
 private:
 	QByteArray _data;
-	QNetworkReply* _raw_reply_ptr = nullptr;
 };

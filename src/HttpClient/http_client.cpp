@@ -81,10 +81,7 @@ void HttpClient::onReplyReceived(QNetworkReply* reply)
 		return;
 	}
 
-	//auto reply_data_ptr = std::make_shared<QByteArray>(reply->readAll());
-	const auto& reply_data = reply->readAll();
-	//NetworkReply parsed_reply (reply_data);
-	Q_EMIT receivedReply(std::make_shared<NetworkReply>(reply_data));
+	Q_EMIT receivedReply(std::make_shared<NetworkReply>(reply->readAll()));
 
 	reply->deleteLater();
 }
