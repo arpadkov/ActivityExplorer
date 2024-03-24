@@ -7,3 +7,5 @@ target_sources(ActivityExplorer PRIVATE
     "${dir}/NetworkReply.h" "${dir}/network_reply.cpp"
     "${dir}/NetworkRequest.h" "${dir}/network_request.cpp"
 )
+
+add_test(test_http_client ${dir})
