@@ -24,15 +24,23 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
-enable_testing()
 include(GoogleTest)
+enable_testing()
 
 # define macro to add tests
-macro(add_test TEST_NAME DIR)
-    add_executable(${TEST_NAME} ${DIR}/tests/${TEST_NAME}.cpp)
-    target_link_libraries(${TEST_NAME} GTest::gtest_main)
+macro(add_test_with_linked_libs TEST_NAME )
+    add_executable(${TEST_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/tests/${TEST_NAME}.cpp)
+    target_link_libraries(${TEST_NAME}
+    GTest::gtest_main
+    GTest::gtest
+    GTest::gmock_main
+    GTest::gmock
+    ${ARGN}
+    )
     gtest_discover_tests(${TEST_NAME})
 endmacro()
+
+include_directories(src)
 
 add_subdirectory(
     src

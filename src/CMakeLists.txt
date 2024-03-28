@@ -43,6 +43,9 @@ target_link_libraries(ActivityExplorer PUBLIC
     Qt6::Positioning
     Qt6::Qml
     Qt6::Quick
+    DataProvider
+    HttpClient
+    Tools
     #MapView
 )
 

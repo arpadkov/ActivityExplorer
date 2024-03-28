@@ -2,7 +2,8 @@
 #include "StravaSetupWidget.h"
 #include "StravaCredentials.h"
 
-#include <HttpClient/HttpClient.h>
+#include <HttpClient.h>
+#include <NetworkRequest.h>
 
 #include <QLineEdit>
 

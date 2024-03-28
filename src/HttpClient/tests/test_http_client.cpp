@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 
+#include "HttpClient.h"
 
 
-TEST(HelloTest, BasicAssertions) {
-	// Expect two strings not to be equal.
-	EXPECT_STRNE("hello", "world");
-	// Expect equality.
-	EXPECT_EQ(7 * 6, 42);
+TEST(TestHttpClient, TestGetClient) {
+	auto client1 = HttpClient::get();
+	auto client2 = HttpClient::get();
+
+	EXPECT_EQ(client1, client2);
 }

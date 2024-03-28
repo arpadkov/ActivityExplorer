@@ -1,13 +1,16 @@
 #pragma once
 
-#include "NetworkRequest.h"
 #include "NetworkReply.h"
-#include <Tools/ErrorDetail.h>
+
+#include <ErrorDetail.h>
 
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QMutex>
 #include <memory>
+
+// Forwards
+class NetworkRequest;
 
 
 /*
@@ -46,5 +49,3 @@ signals:
 	void receivedReply(std::shared_ptr<NetworkReply> reply);
 	void receivedError(ErrorDetail error);
 };
-
-//std::shared_ptr<HttpClient> HttpClient::client_ptr = nullptr;

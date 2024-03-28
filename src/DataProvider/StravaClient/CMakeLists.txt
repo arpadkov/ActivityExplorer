@@ -8,4 +8,4 @@ target_sources(ActivityExplorer PRIVATE
     "${dir}/StravaSetupWidget.h" "${dir}/strava_setup_widget.cpp" "${dir}/strava_setup_widget.ui"
 )
 
-add_test(test_strava_client ${dir})
+add_test_with_linked_libs(test_strava_client DataProvider)

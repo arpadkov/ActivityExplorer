@@ -2,7 +2,7 @@
 
 #include "StravaCredentials.h"
 
-#include <DataProvider/DataProvider.h>
+#include <DataProvider.h>
 
 #include <QString>
 

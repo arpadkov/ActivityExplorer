@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QWidget>
-#include <DataProvider/DlgSetupDataProvider.h>
+//#include <QWidget>
+#include <DlgSetupDataProvider.h>
 
 namespace Ui
 {

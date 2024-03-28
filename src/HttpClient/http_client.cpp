@@ -1,4 +1,7 @@
 #include "HttpClient.h"
+#include "NetworkRequest.h"
+
+#include <ErrorDetail.h>
 
 #include <QEventLoop>
 #include <QNetworkReply>

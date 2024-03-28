@@ -3,8 +3,9 @@
 #include "StravaClient.h"
 #include "StravaCredentials.h"
 
-#include <HttpClient/HttpClient.h>
-#include <Tools/ErrorDialog.h>
+#include <HttpClient.h>
+#include <NetworkRequest.h>
+#include <ErrorDialog.h>
 
 #include <QDialog>
 #include <QJsonDocument>

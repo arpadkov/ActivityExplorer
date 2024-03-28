@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 
-
+#include <DataProvider.h>
+#include <QString>
 
 TEST(HelloTest, BasicAssertions) {
-	// Expect two strings not to be equal.
-	EXPECT_STRNE("hello", "world");
-	// Expect equality.
-	EXPECT_EQ(7 * 6, 42);
+	QString str1 = "abc";
+	QString str2 = "abc";
+	
+	EXPECT_EQ(str1, str2);
 }
