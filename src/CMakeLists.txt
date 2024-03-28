@@ -20,10 +20,10 @@ foreach (_qml ${ARGN})
 endforeach()
 endmacro()
 
+add_subdirectory(Tools)
 add_subdirectory(DataProvider)
 add_subdirectory(HttpClient)
 add_subdirectory(Map)
-add_subdirectory(Tools)
 
 qt_add_qml_module(ActivityExplorer
     URI QmlForms
@@ -43,9 +43,9 @@ target_link_libraries(ActivityExplorer PUBLIC
     Qt6::Positioning
     Qt6::Qml
     Qt6::Quick
+    Tools
     DataProvider
     HttpClient
-    Tools
     #MapView
 )
 

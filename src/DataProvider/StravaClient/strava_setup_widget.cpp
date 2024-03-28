@@ -8,13 +8,7 @@
 #include <ErrorDialog.h>
 
 #include <QDialog>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QWebEngineView>
-#include <QUrl>
-#include <QUrlQuery>
 
 #include "ui_strava_setup_widget.h"
 

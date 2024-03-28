@@ -13,6 +13,7 @@ add_library(DataProvider STATIC
 
 target_link_libraries(DataProvider PUBLIC
     Qt6::Core
+    Tools
 )
 
 target_include_directories(DataProvider PUBLIC ${dir})

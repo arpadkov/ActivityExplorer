@@ -5,9 +5,6 @@
 #include <HttpClient.h>
 #include <NetworkRequest.h>
 
-#include <QLineEdit>
-
-
 
 namespace Providers::StravaClient
 {

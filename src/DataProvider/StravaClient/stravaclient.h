@@ -1,10 +1,6 @@
 #pragma once
 
-#include "StravaCredentials.h"
-
 #include <DataProvider.h>
-
-#include <QString>
 
 // Forwards
 class QNetworkReply;

@@ -1,9 +1,9 @@
-#include "DlgSetupDataProvider.h"
 #include "DataProvider.h"
+#include "DlgSetupDataProvider.h"
 
-#include <DataProvider/StravaClient/StravaClient.h>
-#include <DataProvider/LocalFilesProvider/LocalFilesProvider.h>
-#include <Tools/ErrorDialog.h>
+#include <StravaClient/StravaClient.h>
+#include <LocalFilesProvider/LocalFilesProvider.h>
+#include <ErrorDialog.h>
 
 #include <QDir>
 #include <QStandardPaths>
@@ -97,9 +97,9 @@ bool DataProviderConfiguration::writeConfig()
 	QJsonObject json_object;
 	json_object["configured_provider"] = _configured_provider;
 
-	QJsonDocument jso_doc(json_object);
+	QJsonDocument json_doc(json_object);
 
-	file.write(jso_doc.toJson());
+	file.write(json_doc.toJson());
 	file.close();
 
 	qInfo() << "(DataProviderConfiguration) Provider config written to:  " << file.fileName();

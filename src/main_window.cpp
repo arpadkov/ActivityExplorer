@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include <Map/mapviewwindow.h>
-#include <DataProvider/DataProvider.h>
+#include <DataProvider.h>
 
 #include "ui_main_window.h"
 

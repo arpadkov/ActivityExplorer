@@ -1,12 +1,9 @@
 #include "HttpClient.h"
 #include "NetworkRequest.h"
 
-#include <ErrorDetail.h>
-
 #include <QEventLoop>
 #include <QNetworkReply>
 #include <QTimer>
-#include <thread>
 
 
 std::shared_ptr<HttpClient> HttpClient::client_ptr = nullptr;

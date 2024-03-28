@@ -1,9 +1,6 @@
 #pragma once
 
-#include <DataProvider/DataProvider.h>
-
-#include <QObject>
-#include <QString>
+#include <DataProvider.h>
 
 namespace Providers::LocalFilesProvider
 {
