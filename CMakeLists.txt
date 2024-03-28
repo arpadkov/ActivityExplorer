@@ -28,13 +28,14 @@ include(GoogleTest)
 enable_testing()
 
 # define macro to add tests
-macro(add_test_with_linked_libs TEST_NAME )
+macro(add_test_with_linked_libs TEST_NAME)
     add_executable(${TEST_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/tests/${TEST_NAME}.cpp)
     target_link_libraries(${TEST_NAME}
     GTest::gtest_main
     GTest::gtest
     GTest::gmock_main
     GTest::gmock
+    Qt6::Widgets
     ${ARGN}
     )
     gtest_discover_tests(${TEST_NAME})
