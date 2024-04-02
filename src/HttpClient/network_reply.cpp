@@ -1,15 +1,21 @@
 #include "NetworkReply.h"
 
-#include <QString>
 #include <QJsonObject>
-#include <QJsonDocument>
 #include <QNetworkReply>
 
 
-NetworkReply::NetworkReply(const QByteArray& data) : _data(data)
+NetworkReply::NetworkReply(const QByteArray& data)
 {
-	qInfo() << "NetworkReply CONSTRUCTOR";
+	_data = QJsonDocument::fromJson(data);
+}
 
+NetworkReply::NetworkReply(const QString& data)
+{
+	_data = QJsonDocument::fromJson(data.toUtf8());
+}
+
+NetworkReply::NetworkReply(const QJsonDocument& data) : _data(data)
+{
 }
 
 NetworkReply::~NetworkReply()
@@ -17,16 +23,25 @@ NetworkReply::~NetworkReply()
 	qInfo() << "NetworkReply DESTRUCTOR";
 }
 
-QString NetworkReply::getValue(const QString& key) const
+std::optional<QString> NetworkReply::getStringValue(const QString& key) const
 {
-	QJsonObject json = QJsonDocument::fromJson(_data).object();
+	auto json = _data.object();
 	if (json.contains(key))
 		return json.value(key).toString();
 
 	return {};
 }
 
+std::optional<NetworkReply> NetworkReply::getChild(const QString& key) const
+{
+	auto json = _data.object();
+	if (json.contains(key))
+		return NetworkReply(QJsonDocument(json.value(key).toObject()));
+
+	return {};
+}
+
 QString NetworkReply::getRawData() const
 {
-	return QString(_data);
+	return _data.toJson();
 }

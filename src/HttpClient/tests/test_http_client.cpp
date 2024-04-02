@@ -5,6 +5,11 @@
 
 #include <QtWidgets/QApplication>
 
+const QString ITEM_1_KEY = "item_1";
+const QString ITEM_1_VALUE = "value_1";
+const QString ITEM_2_KEY = "item_2";
+const QString ITEM_2_VALUE = "value_2";
+
 
 TEST(TestHttpClient, TestGetClient) {
 	// Must get the same pointer
@@ -21,29 +26,25 @@ TEST(TestHttpClient, TestWaitForReply)
 	const QString test_post_url = "https://httpbin.org/post";
 
 	NetworkRequest request(test_post_url);
-	request.addQueryItem("item1", "value1");
+	request.addQueryItem(ITEM_1_KEY, ITEM_1_VALUE);
+	request.addQueryItem(ITEM_2_KEY, ITEM_2_VALUE);
 
 	ErrorDetail error;
-	auto reply = client->waitForReply(request, error, 3 * 1000);
+	auto reply = client->waitForReply(request, error, 15 * 1000);
 
-	EXPECT_TRUE(reply);
-	
+	if (!reply)
+		FAIL() << "got no reply";
 
-	auto value = reply->getValue("args");
-	std::cout << value.toStdString();
-	std::cout << reply->getRawData().toStdString();
+	// Sent items are received back in the "args" key
+	auto args_value = reply->getChild("args");
+	if (!args_value)
+		FAIL() << "has no args child";
 
+	auto item1_value = args_value->getStringValue(ITEM_1_KEY);
+	EXPECT_TRUE(item1_value == ITEM_1_VALUE);
 
-
-	//const auto& access_token = reply->getValue(ACCESS_TOKEN);
-	//if (access_token.isEmpty())
-	//	throw std::runtime_error(QString("Reply did not contain access token").toStdString());
-
-	//_access_token = access_token;
-	//qInfo() << "ACCESS TOKEN: " << _access_token;
-	//return true;
-
-	EXPECT_TRUE(false);
+	auto item2_value = args_value->getStringValue(ITEM_2_KEY);
+	EXPECT_TRUE(item2_value == ITEM_2_VALUE);
 }
 
 int main(int argc, char* argv[])

@@ -132,15 +132,15 @@ bool StravaSetupWidget::fillRefreshToken()
 	if (!reply)
 		throw error;
 
-	const auto& refresh_token = reply->getValue(REFRESH_TOKEN);
-	if (refresh_token.isEmpty())
+	const auto& refresh_token = reply->getStringValue(REFRESH_TOKEN);
+	if (!refresh_token)
 	{
 		ErrorDialog::showFrom(QString("json does not contain refresh token\n%1"));
 		return false;
 	}
 
-	ui->refresh_token_edit->setText(refresh_token);
-	qInfo() << "REFRESH TOKEN: " << refresh_token;
+	ui->refresh_token_edit->setText(*refresh_token);
+	qInfo() << "REFRESH TOKEN: " << *refresh_token;
 	return true;
 }
 

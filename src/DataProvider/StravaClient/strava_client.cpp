@@ -58,11 +58,11 @@ bool StravaClient::setAccessToken(const StravaCredential& credentials)
 	if (!reply)
 		throw error;
 
-	const auto& access_token = 	reply->getValue(ACCESS_TOKEN);
-	if (access_token.isEmpty())
+	const auto& access_token = 	reply->getStringValue(ACCESS_TOKEN);
+	if (!access_token)
 		throw std::runtime_error(QString("Reply did not contain access token").toStdString());
 
-	_access_token = access_token;
+	_access_token = *access_token;
 	qInfo() << "ACCESS TOKEN: " << _access_token;
 	return true;
 }

@@ -1,9 +1,8 @@
 #pragma once
 
-#include <QByteArray>
+#include <QJsonDocument>
 
 // Forwards
-class QString;
 class QNetworkReply;
 
 /*
@@ -16,11 +15,14 @@ class NetworkReply
 public:
 	NetworkReply() = default;
 	NetworkReply(const QByteArray& data);
+	NetworkReply(const QString& data);
+	NetworkReply(const QJsonDocument& data);
 	~NetworkReply();
 
-	QString getValue(const QString& key) const;
+	std::optional<QString> getStringValue(const QString& key) const;
+	std::optional<NetworkReply> getChild(const QString& key) const;
 	QString getRawData() const;
 
 private:
-	QByteArray _data;
+	QJsonDocument _data;
 };
