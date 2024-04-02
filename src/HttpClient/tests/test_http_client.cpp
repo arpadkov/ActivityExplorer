@@ -52,6 +52,40 @@ TEST(TestHttpClient, TestGetClient) {
 	EXPECT_EQ(client1, client2);
 }
 
+TEST(TestHttpClient, TestWaitForReplyGet)
+{
+	auto client = HttpClient::get();
+
+	const QString test_get_url = "https://httpbin.org/get";
+
+	NetworkRequest request(test_get_url, NetworkRequestType::GET);
+	request.addQueryItem(ITEM_1_KEY, ITEM_1_VALUE);
+	request.addQueryItem(ITEM_2_KEY, ITEM_2_VALUE);
+
+	ErrorDetail error;
+	auto reply = client->waitForReply(request, error, 15 * 1000);
+
+	if (!reply)
+	{
+		std::cout << "(TestHttpClient) Error\n" << error.getMessage().toStdString();
+		FAIL() << "got no reply";
+	}
+
+	// Sent items are received back in the "args" key
+	auto args_value = reply->getChild("args");
+	if (!args_value)
+		FAIL() << "has no args child";
+
+	auto item1_value = args_value->getStringValue(ITEM_1_KEY);
+	EXPECT_TRUE(item1_value == ITEM_1_VALUE);
+
+	auto item2_value = args_value->getStringValue(ITEM_2_KEY);
+	EXPECT_TRUE(item2_value == ITEM_2_VALUE);
+
+	std::cout << "(TestHttpClient) Raw reply\n" << reply->getRawData().toStdString();
+	//EXPECT_TRUE(false);	// Shitty way of showing logs
+}
+
 TEST(TestHttpClient, TestWaitForReplyPost)
 {
 	auto client = HttpClient::get();
