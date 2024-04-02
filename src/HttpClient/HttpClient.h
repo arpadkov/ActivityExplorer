@@ -26,7 +26,10 @@ public:
 	static std::shared_ptr<HttpClient> get();
 
 	void postRequest(const NetworkRequest& request, const QByteArray& data);
+	void getRequest(const NetworkRequest& request);
+
 	std::shared_ptr<NetworkReply> waitForReply(const NetworkRequest& request, ErrorDetail& error, int timeout_ms = -1);
+	std::shared_ptr<NetworkReply> waitForReply(const NetworkRequest& request, ErrorDetail& error, const QByteArray& data = {}, int timeout_ms = -1);
 
 	~HttpClient();
 	HttpClient(const HttpClient& cl) = delete;

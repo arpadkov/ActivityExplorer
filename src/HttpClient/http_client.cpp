@@ -37,7 +37,17 @@ void HttpClient::postRequest(const NetworkRequest& request, const QByteArray& da
 	_manager.post(request.getQNetworkRequest(), data);
 }
 
+void HttpClient::getRequest(const NetworkRequest& request)
+{
+	_manager.get(request.getQNetworkRequest());
+}
+
 std::shared_ptr<NetworkReply> HttpClient::waitForReply(const NetworkRequest& request, ErrorDetail& error, int timeout_ms)
+{
+	return waitForReply(request, error, {}, timeout_ms);
+}
+
+std::shared_ptr<NetworkReply> HttpClient::waitForReply(const NetworkRequest& request, ErrorDetail& error, const QByteArray& data, int timeout_ms)
 {
 	std::shared_ptr<NetworkReply> reply;
 
@@ -62,7 +72,18 @@ std::shared_ptr<NetworkReply> HttpClient::waitForReply(const NetworkRequest& req
 	if (timeout_ms > 0)
 		QTimer::singleShot(timeout_ms, &wait_loop, &QEventLoop::quit);
 
-	postRequest(request, QByteArray());
+	switch (request.type)
+	{
+	case NetworkRequestType::GET:
+		getRequest(request);
+		break;
+	case NetworkRequestType::POST:
+		postRequest(request, data);
+		break;
+	default:
+		break;
+	}
+	
 	wait_loop.exec();
 
 	return reply;

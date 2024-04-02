@@ -121,7 +121,7 @@ bool StravaSetupWidget::fillRefreshToken()
 	const QString& client_secret = ui->client_secret_edit->text();
 	const QString& auth_code = ui->authentication_code_edit->text();
 
-	NetworkRequest request(AUTH_URL);
+	NetworkRequest request(AUTH_URL, NetworkRequestType::POST);
 	request.addQueryItem(CLIENT_ID, client_id);
 	request.addQueryItem(CLIENT_SECRET, client_secret);
 	request.addQueryItem(AUTH_CODE, auth_code);

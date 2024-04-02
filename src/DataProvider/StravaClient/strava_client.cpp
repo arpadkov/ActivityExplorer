@@ -47,7 +47,7 @@ bool StravaClient::setAccessToken(const StravaCredential& credentials)
 {
 	auto client = HttpClient::get();
 
-	NetworkRequest request(AUTH_URL);
+	NetworkRequest request(AUTH_URL, NetworkRequestType::POST);
 	request.addQueryItem(CLIENT_ID, credentials.client_id);
 	request.addQueryItem(CLIENT_SECRET, credentials.client_secret);
 	request.addQueryItem(REFRESH_TOKEN, credentials.refresh_token);
