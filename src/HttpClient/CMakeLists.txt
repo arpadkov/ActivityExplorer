@@ -15,7 +15,7 @@ target_link_libraries(HttpClient PUBLIC
     Qt6::Network
     Tools
 )
-
+# TODO: Remove not neccessery include_directory-s
 target_include_directories(HttpClient PUBLIC ${dir})
 
 add_test_with_linked_libs(test_http_client HttpClient)

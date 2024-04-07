@@ -2,6 +2,7 @@
 
 set(dir "${CMAKE_CURRENT_SOURCE_DIR}")
 
+# TODO: Make it part of the DataProvider library
 target_sources(ActivityExplorer PRIVATE
     "${dir}/StravaClient.h" "${dir}/strava_client.cpp"
     "${dir}/StravaCredentials.h" "${dir}/strava_credentials.cpp"

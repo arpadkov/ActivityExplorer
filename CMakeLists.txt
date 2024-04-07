@@ -30,6 +30,7 @@ enable_testing()
 # define macro to add tests
 macro(add_test_with_linked_libs TEST_NAME)
     add_executable(${TEST_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/tests/${TEST_NAME}.cpp)
+    target_include_directories(${TEST_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
     target_link_libraries(${TEST_NAME}
     GTest::gtest_main
     GTest::gtest

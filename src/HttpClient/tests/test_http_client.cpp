@@ -77,10 +77,10 @@ TEST(TestHttpClient, TestWaitForReplyGet)
 		FAIL() << "has no args child";
 
 	auto item1_value = args_value->getStringValue(ITEM_1_KEY);
-	EXPECT_TRUE(item1_value == ITEM_1_VALUE);
+	EXPECT_EQ(item1_value, ITEM_1_VALUE);
 
 	auto item2_value = args_value->getStringValue(ITEM_2_KEY);
-	EXPECT_TRUE(item2_value == ITEM_2_VALUE);
+	EXPECT_EQ(item2_value, ITEM_2_VALUE);
 
 	std::cout << "(TestHttpClient) Raw reply\n" << reply->getRawData().toStdString();
 	//EXPECT_TRUE(false);	// Shitty way of showing logs
@@ -103,7 +103,10 @@ TEST(TestHttpClient, TestWaitForReplyPost)
 	auto reply = client->waitForReply(request, error, data, 15 * 1000);
 
 	if (!reply)
+	{
+		std::cout << "(TestHttpClient) Error\n" << error.getMessage().toStdString();
 		FAIL() << "got no reply";
+	}
 
 	// Sent items are received back in the "args" key
 	auto args_value = reply->getChild("args");
@@ -111,13 +114,13 @@ TEST(TestHttpClient, TestWaitForReplyPost)
 		FAIL() << "has no args child";
 
 	auto item1_value = args_value->getStringValue(ITEM_1_KEY);
-	EXPECT_TRUE(item1_value == ITEM_1_VALUE);
+	EXPECT_EQ(item1_value, ITEM_1_VALUE);
 
 	auto item2_value = args_value->getStringValue(ITEM_2_KEY);
-	EXPECT_TRUE(item2_value == ITEM_2_VALUE);
+	EXPECT_EQ(item2_value, ITEM_2_VALUE);
 
 	auto reply_data = reply->getStringValue("data");
-	EXPECT_TRUE(reply_data == TEST_DATA);
+	EXPECT_EQ(reply_data, TEST_DATA);
 }
 
 int main(int argc, char* argv[])
