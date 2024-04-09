@@ -1,5 +1,9 @@
 # src
 
+add_subdirectory(Tools)
+add_subdirectory(HttpClient)
+add_subdirectory(DataProvider)
+
 qt6_add_executable(ActivityExplorer
     MANUAL_FINALIZATION
     ${TS_FILES}
@@ -20,9 +24,6 @@ foreach (_qml ${ARGN})
 endforeach()
 endmacro()
 
-add_subdirectory(Tools)
-add_subdirectory(DataProvider)
-add_subdirectory(HttpClient)
 add_subdirectory(Map)
 
 qt_add_qml_module(ActivityExplorer
@@ -48,6 +49,7 @@ target_link_libraries(ActivityExplorer PUBLIC
     HttpClient
     #MapView
 )
+
 
 
 

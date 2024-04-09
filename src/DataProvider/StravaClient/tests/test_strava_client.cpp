@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <DataProvider.h>
+#include <StravaClient.h>
 #include <QString>
 
 TEST(HelloTest, BasicAssertions) {
