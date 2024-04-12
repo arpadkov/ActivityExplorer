@@ -20,12 +20,21 @@ StravaClient::~StravaClient()
 	qInfo("(StravaClient): Destructor");
 }
 
-/* Read credentials from file, and set refresh token
-  Can throw std::runtime_error */
-bool StravaClient::initilize()
+/*
+* Read credentials from file, and set refresh token
+* If init_hin is provided, will not read the credentials, just use it from argument - used only for testing
+* becuase it is from a different executeable and QStandardPath is different
+* Can throw std::runtime_error
+*/
+bool StravaClient::initilize(const DataProviderInitializationHint& init_hint)
 {
-	auto credentials = StravaCredential();
-	if (!credentials.readCredentials())
+	const StravaCredential* credentials_hint = std::get_if<StravaCredential>(&init_hint);
+
+	// Use credentials_hint if provided, otherwise read credentials
+	StravaCredential credentials;
+	if (credentials_hint)
+		credentials = *credentials_hint;
+	else if (!credentials.readCredentials())
 		throw std::runtime_error("Could not read credentials");
 
 	if (!setAccessToken(credentials))

@@ -4,10 +4,6 @@
 
 namespace Providers::StravaClient
 {
-
-const QString STRAVA_CLIENT_FOLDER = "StravaClient";
-const QString USER_DATA_FILE = "user_data.json";
-
 /*
 * Class to save/read strava credentials. Responsible for defining the location.
 * Should do some encrypting
@@ -19,7 +15,7 @@ public:
 	StravaCredential();
 	~StravaCredential();
 
-	bool readCredentials();
+	bool readCredentials(QString filename_hint = {});
 	bool saveCredentials();
 
 	QString client_id;			// Stored locally and entered manuall

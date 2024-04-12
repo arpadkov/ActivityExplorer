@@ -1,5 +1,6 @@
 #pragma once
 
+#include <StravaClient/StravaCredentials.h>
 #include <QObject>
 #include <QString>
 
@@ -16,6 +17,8 @@ const QString LOCAL_PROVIDER = "local_provider";
 
 QString getDataProviderLocation();
 
+using DataProviderInitializationHint = std::variant<std::monostate, StravaClient::StravaCredential>;
+
 class DataProvider : public QObject
 {
 Q_OBJECT
@@ -25,8 +28,7 @@ public:
 
 	bool initilizeProvider();
 
-	/* TODO: call this from DataProvider() constructor and allow+handle exceptions in initialize() */
-	virtual bool initilize() = 0;
+	virtual bool initilize(const DataProviderInitializationHint& init_hint = {}) = 0;
 	virtual DataProviderSetupWidget* createSetupWidget() = 0;
 	virtual QString getType() = 0;
 };

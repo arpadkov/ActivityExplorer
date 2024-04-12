@@ -11,7 +11,7 @@ class LocalFilesProvider : public DataProvider
 public:
 	LocalFilesProvider();
 
-	bool initilize() override;
+	bool initilize(const DataProviderInitializationHint& init_hint) override;
 	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
 };

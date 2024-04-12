@@ -28,14 +28,16 @@ StravaCredential::StravaCredential() {};
 
 StravaCredential::~StravaCredential() {};
 
-
-bool StravaCredential::readCredentials()
+/*
+* Read credentials from provided filename or from StravaClient StandardPath location
+*/
+bool StravaCredential::readCredentials(QString filename_hint)
 {
-	QFile file(getStravaClientLocation());
+	QFile file(filename_hint.isEmpty() ? getStravaClientLocation() : filename_hint);
 	if (!file.open(QIODevice::ReadOnly))
 		return false;
 
-	qInfo() << "FILENAME: " << getStravaClientLocation();
+	qInfo() << "FILENAME: " << getStravaClientLocation() << "\n";
 
 	auto bytes = file.readAll();
 	file.close();

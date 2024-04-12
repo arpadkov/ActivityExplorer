@@ -14,6 +14,9 @@ class StravaCredential;
 namespace Providers::StravaClient
 {
 
+const QString STRAVA_CLIENT_FOLDER = "StravaClient";
+const QString USER_DATA_FILE = "user_data.json";
+
 const QString AUTH_URL = "https://www.strava.com/oauth/token";
 
 const QString CLIENT_ID = "client_id";
@@ -32,7 +35,7 @@ public:
 	StravaClient();
 	~StravaClient();
 
-	bool initilize() override;
+	bool initilize(const DataProviderInitializationHint& init_hint) override;
 	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
 

@@ -8,7 +8,7 @@ LocalFilesProvider::LocalFilesProvider() : DataProvider()
 	qInfo("(LocalFilesProvider): Constructor");
 }
 
-bool LocalFilesProvider::initilize()
+bool LocalFilesProvider::initilize(const DataProviderInitializationHint& init_hint)
 {
 	return false;
 }
