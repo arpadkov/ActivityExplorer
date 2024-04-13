@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#include <Logging.h>
+
 #include <QtWidgets/QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -7,6 +9,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    setUpLogging();
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();

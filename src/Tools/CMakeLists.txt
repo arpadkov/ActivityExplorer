@@ -9,6 +9,8 @@ add_library(Tools STATIC
     "${dir}/error_dialog.cpp"
     "${dir}/error_dialog.ui"
     "${dir}/error_detail.cpp"
+    "${dir}/Logging.h"
+    "${dir}/logging.cpp"
 )
 
 target_link_libraries(Tools PUBLIC
