@@ -9,12 +9,14 @@ namespace Providers
 
 namespace
 {
-int dataProviderTypeToIndex(const QString& provider_type)
+std::optional<int> dataProviderTypeToIndex(const QString& provider_type)
 {
 	if (provider_type == Providers::STRAVA_CLIENT)
 		return 0;
 	else if (provider_type == Providers::LOCAL_PROVIDER)
 		return 1;
+
+	return std::nullopt;
 }
 }
 
@@ -33,8 +35,11 @@ SetupDataProviderDialog::SetupDataProviderDialog(QWidget* parent)
 
 	DataProviderConfiguration config;
 	const QString& provider_type = config.getConfiguredProviderType();
-	ui->data_provider_combobox->setCurrentIndex(
-		provider_type.isEmpty() ? 0 : dataProviderTypeToIndex(provider_type));
+	auto provider_index = dataProviderTypeToIndex(provider_type);
+	if (provider_index && !provider_type.isEmpty())
+		ui->data_provider_combobox->setCurrentIndex(*provider_index);
+	else
+		ui->data_provider_combobox->setCurrentIndex(0);
 
 	onProviderChanged();
 }
