@@ -2,7 +2,8 @@
 
 #include "ui_error_dialog.h"
 
-ErrorDialog::ErrorDialog(const ErrorDetail& error_detail, QWidget* parent) : QDialog(parent), ui(new Ui::ErrorDialog)
+ErrorDialog::ErrorDialog(const ErrorDetail& error_detail, QWidget* parent) :
+	QDialog(parent), ui(new Ui::ErrorDialog)
 {
 	ui->setupUi(this);
 

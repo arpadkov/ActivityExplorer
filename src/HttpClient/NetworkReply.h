@@ -6,7 +6,8 @@
 class QNetworkReply;
 
 /*
-* Interface to handle network replies, responsible for parsing the data and returning a useable object.
+* Interface to handle network replies, responsible for parsing the data and
+* returning a useable object.
 * For now setup for json replies.
 * Responsible for deleting the original reply.
 */

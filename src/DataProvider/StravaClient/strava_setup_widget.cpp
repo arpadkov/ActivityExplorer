@@ -16,20 +16,25 @@
 namespace Providers::StravaClient
 {
 
-const QString GET_AUTH_CODE_URL = "http://www.strava.com/oauth/authorize?client_id=%1&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read,activity:read_all";
+const QString GET_AUTH_CODE_URL =
+"http://www.strava.com/oauth/authorize?client_id=%1&response_type=code&"
+"redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope="
+"read, activity:read_all";
 
-StravaSetupWidget::StravaSetupWidget(QWidget *parent)
+StravaSetupWidget::StravaSetupWidget(QWidget* parent)
 	: DataProviderSetupWidget(parent), ui(new Ui::StravaSetupWidget)
 {
 	ui->setupUi(this);
 
-	QObject::connect(ui->authorize_button, &QPushButton::clicked, this, &StravaSetupWidget::onAuthorize);
+	QObject::connect(ui->authorize_button, &QPushButton::clicked,
+		this, &StravaSetupWidget::onAuthorize);
 
 	fillFromConfigFile();
 }
 
 StravaSetupWidget::~StravaSetupWidget()
-{}
+{
+}
 
 void StravaSetupWidget::fillFromConfigFile()
 {
@@ -42,7 +47,10 @@ void StravaSetupWidget::fillFromConfigFile()
 
 bool StravaSetupWidget::isConfigured() const
 {
-	return !(ui->client_id_edit->text().isEmpty() || ui->client_secret_edit->text().isEmpty() || ui->refresh_token_edit->text().isEmpty() || ui->authentication_code_edit->text().isEmpty());
+	return !(ui->client_id_edit->text().isEmpty() ||
+		ui->client_secret_edit->text().isEmpty() ||
+		ui->refresh_token_edit->text().isEmpty() ||
+		ui->authentication_code_edit->text().isEmpty());
 }
 
 /* Write StravaCredentials */
@@ -66,7 +74,8 @@ void StravaSetupWidget::onAuthorize()
 
 /*
 * Opens a mini browser with the client id.
-* Sets the authorization code in the widget, which is used to get the refresh token.
+* Sets the authorization code in the widget, which is used to get the refresh
+* token.
 */
 bool StravaSetupWidget::fillAuthorizationCode()
 {
@@ -101,10 +110,12 @@ bool StravaSetupWidget::fillAuthorizationCode()
 
 	QString code;
 	int startIndex = forwarded_url.indexOf(code_match);
-	if (startIndex != -1) {
-		startIndex += code_match.length(); // Move the index to the beginning of the code
+	if (startIndex != -1)
+	{
+		startIndex += code_match.length(); // Move index to the beginning of code
 		int endIndex = forwarded_url.indexOf('&', startIndex);
-		if (endIndex != -1) {
+		if (endIndex != -1)
+		{
 			code = forwarded_url.mid(startIndex, endIndex - startIndex);
 		}
 	}

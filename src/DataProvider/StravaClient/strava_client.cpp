@@ -22,13 +22,15 @@ StravaClient::~StravaClient()
 
 /*
 * Read credentials from file, and set refresh token
-* If init_hin is provided, will not read the credentials, just use it from argument - used only for testing
+* If init_hin is provided, will not read the credentials, just use it from
+* argument - used only for testing
 * becuase it is from a different executeable and QStandardPath is different
 * Can throw std::runtime_error
 */
 bool StravaClient::initilize(const DataProviderInitializationHint& init_hint)
 {
-	const StravaCredential* credentials_hint = std::get_if<StravaCredential>(&init_hint);
+	const StravaCredential* credentials_hint =
+		std::get_if<StravaCredential>(&init_hint);
 
 	// Use credentials_hint if provided, otherwise read credentials
 	StravaCredential credentials;
@@ -68,9 +70,10 @@ bool StravaClient::setAccessToken(const StravaCredential& credentials)
 	if (!reply)
 		throw error;
 
-	const auto& access_token = 	reply->getStringValue(ACCESS_TOKEN);
+	const auto& access_token = reply->getStringValue(ACCESS_TOKEN);
 	if (!access_token)
-		throw std::runtime_error(QString("Reply did not contain access token").toStdString());
+		throw std::runtime_error(
+			QString("Reply did not contain access token").toStdString());
 
 	_access_token = *access_token;
 	qInfo() << "ACCESS TOKEN: " << _access_token;

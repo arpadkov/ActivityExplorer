@@ -15,25 +15,37 @@ namespace
 {
 QString getStravaClientLocation()
 {
-	return Providers::getDataProviderLocation() + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
+	return Providers::getDataProviderLocation() + QDir::separator() +
+		STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
 }
 }
 
-StravaCredential::StravaCredential(QString client_id_, QString client_secret_, QString refresh_token_)
-	: client_id(client_id_), client_secret(client_secret_), refresh_token(refresh_token_)
+StravaCredential::StravaCredential(QString client_id_,
+																	 QString client_secret_,
+																	 QString refresh_token_) :
+	client_id(client_id_), client_secret(client_secret_),
+	refresh_token(refresh_token_)
 {
 }
 
-StravaCredential::StravaCredential() {};
+StravaCredential::StravaCredential()
+{
+};
 
-StravaCredential::~StravaCredential() {};
+StravaCredential::~StravaCredential()
+{
+};
 
 /*
-* Read credentials from provided filename or from StravaClient StandardPath location
+* Read credentials from provided filename or from StravaClient StandardPath
+* location
 */
 bool StravaCredential::readCredentials(QString filename_hint)
 {
-	QFile file(filename_hint.isEmpty() ? getStravaClientLocation() : filename_hint);
+	QFile file(filename_hint.isEmpty() ?
+		getStravaClientLocation() :
+		filename_hint);
+
 	if (!file.open(QIODevice::ReadOnly))
 		return false;
 
@@ -57,7 +69,8 @@ bool StravaCredential::readCredentials(QString filename_hint)
 	}
 
 	auto json_obj = document.object();
-	if (!json_obj.contains(CLIENT_ID) || !json_obj.contains(CLIENT_SECRET) || !json_obj.contains(REFRESH_TOKEN))
+	if (!json_obj.contains(CLIENT_ID) || !json_obj.contains(CLIENT_SECRET) ||
+		!json_obj.contains(REFRESH_TOKEN))
 	{
 		qInfo() << "User data is missing from json";
 		return false;

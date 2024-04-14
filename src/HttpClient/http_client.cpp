@@ -13,7 +13,8 @@ HttpClient::HttpClient()
 {
 	qInfo() << "(HttpClient) Constructor";
 
-	QObject::connect(&_manager, &QNetworkAccessManager::finished, this, &HttpClient::onReplyReceived);
+	QObject::connect(&_manager, &QNetworkAccessManager::finished,
+		this, &HttpClient::onReplyReceived);
 }
 
 HttpClient::~HttpClient()
@@ -25,14 +26,15 @@ HttpClient::~HttpClient()
 std::shared_ptr<HttpClient> HttpClient::get()
 {
 	QMutexLocker<QMutex> locker(&_mutex);
-	
+
 	if (!client_ptr)
 		client_ptr = std::shared_ptr<HttpClient>(new HttpClient());
 
 	return client_ptr;
 }
 
-void HttpClient::postRequest(const NetworkRequest& request, const QByteArray& data)
+void HttpClient::postRequest(const NetworkRequest& request,
+	const QByteArray& data)
 {
 	_manager.post(request.getQNetworkRequest(), data);
 }
@@ -42,28 +44,41 @@ void HttpClient::getRequest(const NetworkRequest& request)
 	_manager.get(request.getQNetworkRequest());
 }
 
-std::shared_ptr<NetworkReply> HttpClient::waitForReply(const NetworkRequest& request, ErrorDetail& error, int timeout_ms)
+std::shared_ptr<NetworkReply> HttpClient::waitForReply(
+	const NetworkRequest& request, ErrorDetail& error, int timeout_ms)
 {
 	return waitForReply(request, error, {}, timeout_ms);
 }
 
-std::shared_ptr<NetworkReply> HttpClient::waitForReply(const NetworkRequest& request, ErrorDetail& error, const QByteArray& data, int timeout_ms)
+std::shared_ptr<NetworkReply> HttpClient::waitForReply(
+	const NetworkRequest& request,
+	ErrorDetail& error,
+	const QByteArray& data,
+	int timeout_ms)
 {
 	std::shared_ptr<NetworkReply> reply;
 
 	// Empty event loop to wait until the request is finished
 	QEventLoop wait_loop;
-	QObject::connect(this, &HttpClient::receivedReply, &wait_loop, [&]() {wait_loop.quit(); });
-	QObject::connect(this, &HttpClient::receivedError, &wait_loop, [&]() {wait_loop.quit(); });
+	QObject::connect(this, &HttpClient::receivedReply, &wait_loop, [&]()
+		{
+			wait_loop.quit();
+		});
+	QObject::connect(this, &HttpClient::receivedError, &wait_loop, [&]()
+		{
+			wait_loop.quit();
+		});
 
 	// Connect to own receivedReply signal to get the parsed reply
-	QObject::connect(this, &HttpClient::receivedReply, &wait_loop, [&](std::shared_ptr<NetworkReply> rep)
+	QObject::connect(this, &HttpClient::receivedReply, &wait_loop,
+		[&](std::shared_ptr<NetworkReply> rep)
 		{
 			reply = rep;
 		});
 
 	// Connect to own receivedError signal
-	QObject::connect(this, &HttpClient::receivedError, &wait_loop, [&](ErrorDetail err)
+	QObject::connect(this, &HttpClient::receivedError, &wait_loop,
+		[&](ErrorDetail err)
 		{
 			error = err;
 		});
@@ -83,21 +98,23 @@ std::shared_ptr<NetworkReply> HttpClient::waitForReply(const NetworkRequest& req
 	default:
 		break;
 	}
-	
+
 	wait_loop.exec();
 
 	return reply;
 }
 
-/* The QNetworkReply will be deleted once this method exits, so save the contents first, before emitting signal */
+/* The QNetworkReply will be deleted once this method exits, so save the
+* contents first, before emitting signal */
 void HttpClient::onReplyReceived(QNetworkReply* reply)
 {
-	
+
 	if (reply->error() != QNetworkReply::NoError)
 	{
 		const QString& error = reply->errorString();
 		const QString& content = QString(reply->readAll());
-		qInfo() << "(HttpClient) Got reply with error: " << error << "\n" << content; 
+		qInfo() << "(HttpClient) Got reply with error: " << error << 
+			"\n" << content;
 		Q_EMIT receivedError(ErrorDetail(error));
 		return;
 	}

@@ -3,7 +3,8 @@
 #include <QNetworkRequest>
 #include <QUrlQuery>
 
-NetworkRequest::NetworkRequest(const QString& url, NetworkRequestType type_) : _url(url), type(type_)
+NetworkRequest::NetworkRequest(const QString& url, NetworkRequestType type_) :
+	_url(url), type(type_)
 {
 }
 

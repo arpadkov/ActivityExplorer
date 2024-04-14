@@ -15,7 +15,7 @@ class StravaSetupWidget : public DataProviderSetupWidget
 	Q_OBJECT
 
 public:
-	StravaSetupWidget(QWidget *parent = nullptr);
+	StravaSetupWidget(QWidget* parent = nullptr);
 	~StravaSetupWidget();
 
 	void fillFromConfigFile();
@@ -33,7 +33,7 @@ private:
 	bool _is_configured = false;
 
 	Ui::StravaSetupWidget* ui;
-	 
+
 };
 
 }  // namespace Providers::StravaClient

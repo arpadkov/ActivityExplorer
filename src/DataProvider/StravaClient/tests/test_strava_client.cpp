@@ -11,16 +11,23 @@
 using namespace Providers::StravaClient;
 
 /*
-* Get the StravaClient credentials location, but since QStandardPath depends on the executable name
+* Get the StravaClient credentials location, but since QStandardPath depends on
+* the executable name
 * change test_strava_client to ActivityExplorer
 */
 QString getStravaCredentialsLocationFromTest()
 {
-	QString original_filename = Providers::getDataProviderLocation() + QDir::separator() + STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
+	QString original_filename = Providers::getDataProviderLocation() +
+		QDir::separator() +
+		STRAVA_CLIENT_FOLDER +
+		QDir::separator() +
+		USER_DATA_FILE;
+
 	return original_filename.replace("test_strava_client", "ActivityExplorer");
 }
 
-TEST(TestStravaClient, TestInitialize) {
+TEST(TestStravaClient, TestInitialize)
+{
 	auto cl = std::make_shared<StravaClient>();
 
 	auto credentials_hint = StravaCredential();

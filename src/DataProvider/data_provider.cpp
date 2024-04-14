@@ -56,7 +56,7 @@ void configureDataProvider()
 }
 
 /*
-* Returns an uninitilized specific DataProvider. 
+* Returns an uninitilized specific DataProvider.
 */
 std::shared_ptr<DataProvider> getDataProvider(QString type)
 {

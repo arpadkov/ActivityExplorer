@@ -14,13 +14,14 @@ class NetworkRequest;
 
 
 /*
-* Simplified interface to handle Http requests, abstracts away QNetworkManager, QNetworkReply and QNetworkRequest.
+* Simplified interface to handle Http requests, abstracts away QNetworkManager,
+* QNetworkReply and QNetworkRequest.
 * Singleton, to have only one QNetworkAccessManager object.
 */
 class HttpClient : public QObject
 {
 
-Q_OBJECT
+	Q_OBJECT
 
 public:
 	static std::shared_ptr<HttpClient> get();
@@ -28,8 +29,10 @@ public:
 	void postRequest(const NetworkRequest& request, const QByteArray& data);
 	void getRequest(const NetworkRequest& request);
 
-	std::shared_ptr<NetworkReply> waitForReply(const NetworkRequest& request, ErrorDetail& error, int timeout_ms = -1);
-	std::shared_ptr<NetworkReply> waitForReply(const NetworkRequest& request, ErrorDetail& error, const QByteArray& data = {}, int timeout_ms = -1);
+	std::shared_ptr<NetworkReply> waitForReply(const NetworkRequest& request,
+		ErrorDetail& error, int timeout_ms = -1);
+	std::shared_ptr<NetworkReply> waitForReply(const NetworkRequest& request,
+		ErrorDetail& error, const QByteArray& data = {}, int timeout_ms = -1);
 
 	~HttpClient();
 	HttpClient(const HttpClient& cl) = delete;

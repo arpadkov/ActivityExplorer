@@ -15,19 +15,19 @@ class DataProvider;
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+	MainWindow(QWidget* parent = nullptr);
+	~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+	Ui::MainWindow* ui;
 
-    std::shared_ptr<Providers::DataProvider> _provider;
+	std::shared_ptr<Providers::DataProvider> _provider;
 
 public slots:
-    void testFunction();
+	void testFunction();
 
 };
 

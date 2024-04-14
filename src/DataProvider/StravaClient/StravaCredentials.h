@@ -11,9 +11,11 @@ namespace Providers::StravaClient
 class StravaCredential
 {
 public:
-	StravaCredential(QString client_id_, QString client_secret_, QString refresh_token_);
+	StravaCredential(QString client_id_,
+									 QString client_secret_,
+									 QString refresh_token_);
 	StravaCredential();
-	~StravaCredential();
+	~StravaCredential(); 
 
 	bool readCredentials(QString filename_hint = {});
 	bool saveCredentials();

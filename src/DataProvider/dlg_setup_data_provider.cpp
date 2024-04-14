@@ -11,27 +11,32 @@ namespace
 {
 int dataProviderTypeToIndex(const QString& provider_type)
 {
-    if (provider_type == Providers::STRAVA_CLIENT)
-        return 0;
-    else if (provider_type == Providers::LOCAL_PROVIDER)
-        return 1;
+	if (provider_type == Providers::STRAVA_CLIENT)
+		return 0;
+	else if (provider_type == Providers::LOCAL_PROVIDER)
+		return 1;
 }
 }
 
 SetupDataProviderDialog::SetupDataProviderDialog(QWidget* parent)
-    : QDialog(parent)
-    , ui(new Ui::SetupDataProviderDialog)
+	: QDialog(parent)
+	, ui(new Ui::SetupDataProviderDialog)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 
-    ui->data_provider_combobox->addItems({ Providers::STRAVA_CLIENT, Providers::LOCAL_PROVIDER });
+	ui->data_provider_combobox->addItems(
+		{ Providers::STRAVA_CLIENT, Providers::LOCAL_PROVIDER });
 
-    QObject::connect(ui->data_provider_combobox, &QComboBox::currentIndexChanged, this, &SetupDataProviderDialog::onProviderChanged);
+	QObject::connect(
+		ui->data_provider_combobox, &QComboBox::currentIndexChanged,
+		this, &SetupDataProviderDialog::onProviderChanged);
 
-    DataProviderConfiguration config;    
-    const QString& provider_type = config.getConfiguredProviderType();
-    ui->data_provider_combobox->setCurrentIndex(provider_type.isEmpty() ? 0 : dataProviderTypeToIndex(provider_type));
-    onProviderChanged();
+	DataProviderConfiguration config;
+	const QString& provider_type = config.getConfiguredProviderType();
+	ui->data_provider_combobox->setCurrentIndex(
+		provider_type.isEmpty() ? 0 : dataProviderTypeToIndex(provider_type));
+
+	onProviderChanged();
 }
 
 SetupDataProviderDialog::~SetupDataProviderDialog()
@@ -40,46 +45,47 @@ SetupDataProviderDialog::~SetupDataProviderDialog()
 
 void SetupDataProviderDialog::addSetupWidget(DataProviderSetupWidget* setup_w)
 {
-    _setup_w = setup_w;
-    ui->verticalLayout->addWidget(_setup_w);
+	_setup_w = setup_w;
+	ui->verticalLayout->addWidget(_setup_w);
 }
 
 void SetupDataProviderDialog::cleanSetupWidget()
 {
-    if (_setup_w)
-    {
-        // TODO this does not remove the widget
-        ui->verticalLayout->removeWidget(_setup_w);
-    }
+	if (_setup_w)
+	{
+		// TODO this does not remove the widget
+		ui->verticalLayout->removeWidget(_setup_w);
+	}
 }
 
 void SetupDataProviderDialog::accept()
 {
-    qInfo() << "ACCEPTED";
-    if (!_setup_w)
-    {
-        QDialog::accept();
-        return;
-    }
+	qInfo() << "ACCEPTED";
+	if (!_setup_w)
+	{
+		QDialog::accept();
+		return;
+	}
 
-    _setup_w->onAccepted();
+	_setup_w->onAccepted();
 
-    if (_setup_w->isConfigured())
-    {
-        DataProviderConfiguration config(ui->data_provider_combobox->currentText());
-        config.writeConfig();
-    }
+	if (_setup_w->isConfigured())
+	{
+		DataProviderConfiguration config(ui->data_provider_combobox->currentText());
+		config.writeConfig();
+	}
 
-    QDialog::accept();
+	QDialog::accept();
 }
 
 void SetupDataProviderDialog::onProviderChanged()
 {
-    cleanSetupWidget();
+	cleanSetupWidget();
 
-    auto provider = Providers::getDataProvider(ui->data_provider_combobox->currentText());
+	auto provider = Providers::getDataProvider(
+		ui->data_provider_combobox->currentText());
 
-    addSetupWidget(provider->createSetupWidget());
+	addSetupWidget(provider->createSetupWidget());
 }
 
 }

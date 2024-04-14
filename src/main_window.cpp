@@ -9,35 +9,37 @@
 const QString PRODUCT_NAME = "ActivityExplorer";
 const QString COMPANY_NAME = "ArpadKov";
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent)
+	: QMainWindow(parent)
+	, ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 
-    QObject::connect(ui->test_button, &QPushButton::clicked, this, &MainWindow::testFunction);
+	QObject::connect(
+		ui->test_button, &QPushButton::clicked, this, &MainWindow::testFunction);
 
-    QObject::connect(ui->act_setup_data_provider, &QAction::triggered, this, []()
-        {
-            Providers::configureDataProvider();
-        });
+	QObject::connect(ui->act_setup_data_provider, &QAction::triggered, this, []()
+		{
+			Providers::configureDataProvider();
+		});
 
 
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
 }
 
 void MainWindow::testFunction()
 {
-    _provider = Providers::getDataProvider(Providers::STRAVA_CLIENT);
-    if (_provider)
-        _provider->initilizeProvider();
+	_provider = Providers::getDataProvider(Providers::STRAVA_CLIENT);
+	if (_provider)
+		_provider->initilizeProvider();
 
-    //auto map_window = new MapViewWindow(this);
-    //map_window->show();
+	//auto map_window = new MapViewWindow(this);
+	//map_window->show();
 
-    //auto client = DataProvider::initializeDataProvider(DataProvider::LOCAL_PROVIDER);
+	//auto client =
+	// DataProvider::initializeDataProvider(DataProvider::LOCAL_PROVIDER);
 }
