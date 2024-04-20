@@ -19,6 +19,7 @@ public:
 	NetworkRequest(const QString& url, NetworkRequestType type_);
 
 	void addQueryItem(const QString& key, const QString& value);
+	void addHeaderItem(const QString& key, const QString& value);
 
 	QNetworkRequest getQNetworkRequest() const;
 
@@ -26,5 +27,6 @@ public:
 
 private:
 	QString _url;
+	std::vector<std::pair<QString, QString>> _header_items;
 	std::vector<std::pair<QString, QString>> _query_items;
 };

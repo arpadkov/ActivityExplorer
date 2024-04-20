@@ -8,6 +8,7 @@
 namespace Providers
 {
 class DataProviderSetupWidget;
+class ActivitySummary;
 }
 
 namespace Providers
@@ -31,6 +32,8 @@ public:
 	virtual bool initilize(const DataProviderInitializationHint& init_hint = {}) = 0;
 	virtual DataProviderSetupWidget* createSetupWidget() = 0;
 	virtual QString getType() = 0;
+
+	virtual std::vector<ActivitySummary> getAllActivities() = 0;
 };
 
 class DataProviderConfiguration

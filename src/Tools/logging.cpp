@@ -53,8 +53,7 @@ void createDebugLogFile(const QString file_name)
 	log_file.close();
 }
 
-void handleDebugMessage(
-	QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void handleDebugMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
 	QFile log_file(debug_log_file);
 	log_file.open(QIODevice::WriteOnly | QIODevice::Append);
@@ -64,10 +63,12 @@ void handleDebugMessage(
 	QString time = QDateTime::currentDateTime().toString("hh:mm:ss");
 
 	textStream << time << msg << "\n";
+
+	if (type == QtDebugMsg)
+		OutputDebugString(reinterpret_cast<const WCHAR*>(QString("Debug: " + msg + "\n").utf16()));
 }
 
-void handleInfoMessage(
-	QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void handleInfoMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
 	QFile log_file(session_log_file);
 	log_file.open(QIODevice::WriteOnly | QIODevice::Append);
@@ -80,31 +81,26 @@ void handleInfoMessage(
 	{
 	case QtInfoMsg:
 		textStream << time << "Info:\t" << msg << "\n";
-		OutputDebugString(
-			reinterpret_cast<const WCHAR*>(QString("Info: " + msg + "\n").utf16()));
+		OutputDebugString(reinterpret_cast<const WCHAR*>(QString("Info: " + msg + "\n").utf16()));
 		break;
 	case QtWarningMsg:
 		textStream << time << "Warning:\t" << msg << "\n";
-		OutputDebugString(
-			reinterpret_cast<const WCHAR*>(QString("Warning: " + msg +"\n").utf16()));
+		OutputDebugString(reinterpret_cast<const WCHAR*>(QString("Warning: " + msg +"\n").utf16()));
 		break;
 	default:
 		break;
 	}
 }
 
-void handleErrorMessage(
-	QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void handleErrorMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
 	switch (type)
 	{
 	case QtCriticalMsg:
-		OutputDebugString(reinterpret_cast<const WCHAR*>(
-			QString("Critical: " + msg + "\n").utf16()));
+		OutputDebugString(reinterpret_cast<const WCHAR*>(QString("Critical: " + msg + "\n").utf16()));
 		break;
 	case QtFatalMsg:
-		OutputDebugString(reinterpret_cast<const WCHAR*>(
-			QString("Fatal: " + msg + "\n").utf16()));
+		OutputDebugString(reinterpret_cast<const WCHAR*>(QString("Fatal: " + msg + "\n").utf16()));
 		abort();
 	}
 }
@@ -127,8 +123,7 @@ void setUpLogging()
 }
 
 
-void messageHandler(
-	QtMsgType type, const QMessageLogContext& context, const QString& msg)
+void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
 	QFile log_file(session_log_file);
 	log_file.open(QIODevice::WriteOnly | QIODevice::Append);

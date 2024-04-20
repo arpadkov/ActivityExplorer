@@ -1,5 +1,7 @@
 #include "LocalFilesProvider.h"
 
+#include <Activity.h>
+
 namespace Providers::LocalFilesProvider
 {
 
@@ -21,6 +23,11 @@ DataProviderSetupWidget* LocalFilesProvider::createSetupWidget()
 QString LocalFilesProvider::getType()
 {
 	return LOCAL_PROVIDER;
+}
+
+std::vector<ActivitySummary> LocalFilesProvider::getAllActivities()
+{
+	return std::vector<ActivitySummary>();
 }
 
 }

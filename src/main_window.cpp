@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <Map/mapviewwindow.h>
 #include <DataProvider.h>
+#include <Activity.h>
 
 #include "ui_main_window.h"
 
@@ -34,8 +35,18 @@ MainWindow::~MainWindow()
 void MainWindow::testFunction()
 {
 	_provider = Providers::getDataProvider(Providers::STRAVA_CLIENT);
+	bool initilazed = false;
 	if (_provider)
-		_provider->initilizeProvider();
+		initilazed = _provider->initilizeProvider();
+
+	if (!initilazed)
+	{
+		qWarning() << "NOT INITILIZED";
+		return;
+	}
+
+	_provider->getAllActivities();
+
 
 	//auto map_window = new MapViewWindow(this);
 	//map_window->show();

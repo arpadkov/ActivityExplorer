@@ -14,6 +14,8 @@ public:
 	bool initilize(const DataProviderInitializationHint& init_hint) override;
 	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
+
+	std::vector<ActivitySummary> getAllActivities() override;
 };
 
 } // namespace LocalFilesProvider

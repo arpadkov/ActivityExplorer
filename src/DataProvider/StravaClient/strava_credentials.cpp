@@ -11,15 +11,6 @@
 namespace Providers::StravaClient
 {
 
-namespace
-{
-QString getStravaClientLocation()
-{
-	return Providers::getDataProviderLocation() + QDir::separator() +
-		STRAVA_CLIENT_FOLDER + QDir::separator() + USER_DATA_FILE;
-}
-}
-
 StravaCredential::StravaCredential(QString client_id_,
 																	 QString client_secret_,
 																	 QString refresh_token_) :
@@ -43,7 +34,7 @@ StravaCredential::~StravaCredential()
 bool StravaCredential::readCredentials(QString filename_hint)
 {
 	QFile file(filename_hint.isEmpty() ?
-		getStravaClientLocation() :
+		getStravaClientLocation() + QDir::separator() + USER_DATA_FILE :
 		filename_hint);
 
 	if (!file.open(QIODevice::ReadOnly))

@@ -8,6 +8,9 @@ add_library(DataProvider STATIC
     "${dir}/data_provider.cpp"
     "${dir}/DlgSetupDataProvider.h"
     "${dir}/dlg_setup_data_provider.cpp"
+    "${dir}/Activity.h"
+    "${dir}/activity.cpp"
+    "${dir}/ActivityType.h"
     "${dir}/setup_data_provider.ui"
 )
 

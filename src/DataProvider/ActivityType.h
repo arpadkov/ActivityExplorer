@@ -1,0 +1,60 @@
+#pragma once
+
+namespace Providers
+{
+
+enum class EActivityType : int
+{
+  AlpineSki = 0,
+  BackcountrySki = 1,
+  Badminton = 2,
+  Canoeing = 3,
+  Crossfit = 4,
+  EBikeRide = 5,
+  Elliptical = 6,
+  EMountainBikeRide = 7,
+  Golf = 8,
+  GravelRide = 9,
+  Handcycle = 10,
+  HighIntensityIntervalTraining = 11,
+  Hike = 12,
+  IceSkate = 13,
+  InlineSkate = 14,
+  Kayaking = 15,
+  Kitesurf = 16,
+  MountainBikeRide = 17,
+  NordicSki = 18,
+  Pickleball = 19,
+  Pilates = 20,
+  Racquetball = 21,
+  Ride = 22,
+  RockClimbing = 23,
+  RollerSki = 24,
+  Rowing = 25,
+  Run = 26,
+  Sail = 27,
+  Skateboard = 28,
+  Snowboard = 29,
+  Snowshoe = 30,
+  Soccer = 31,
+  Squash = 32,
+  StairStepper = 33,
+  StandUpPaddling = 34,
+  Surfing = 35,
+  Swim = 36,
+  TableTennis = 37,
+  Tennis = 38,
+  TrailRun = 39,
+  Velomobile = 40,
+  VirtualRide = 41,
+  VirtualRow = 42,
+  VirtualRun = 43,
+  Walk = 44,
+  WeightTraining = 45,
+  Wheelchair = 46,
+  Windsurf = 47,
+  Workout = 48,
+  Yoga = 49
+};
+
+}

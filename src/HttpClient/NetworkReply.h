@@ -21,9 +21,13 @@ public:
 	~NetworkReply();
 
 	std::optional<QString> getStringValue(const QString& key) const;
-	std::optional<NetworkReply> getChild(const QString& key) const;
+	std::optional<qint64> getIntValue(const QString& key) const;
+	std::optional<float> getFloatValue(const QString& key) const;
+	std::optional<const NetworkReply> getChild(const QString& key) const;
+	std::vector<NetworkReply> getArray() const;
 	QString getRawData() const;
+	QJsonDocument getData() const;
 
 private:
-	QJsonDocument _data;
+	const QJsonDocument _data;
 };

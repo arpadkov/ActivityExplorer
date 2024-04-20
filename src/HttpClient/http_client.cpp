@@ -13,8 +13,7 @@ HttpClient::HttpClient()
 {
 	qInfo() << "(HttpClient) Constructor";
 
-	QObject::connect(&_manager, &QNetworkAccessManager::finished,
-		this, &HttpClient::onReplyReceived);
+	QObject::connect(&_manager, &QNetworkAccessManager::finished, this, &HttpClient::onReplyReceived);
 }
 
 HttpClient::~HttpClient()
@@ -50,6 +49,9 @@ std::shared_ptr<NetworkReply> HttpClient::waitForReply(
 	return waitForReply(request, error, {}, timeout_ms);
 }
 
+// TODO: should check if the received reply is the one that has been sent, to not mess up asynchronous requests
+// -> connect to QNetworkRequest::finished
+// TODO: use mutexlocker where needed
 std::shared_ptr<NetworkReply> HttpClient::waitForReply(
 	const NetworkRequest& request,
 	ErrorDetail& error,
