@@ -43,7 +43,7 @@ public:
 	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
 
-	std::vector<ActivitySummary> getAllActivities() override;
+	std::vector<ActivitySummary> getAllActivities(ErrorDetail& error) override;
 
 private:
 	bool setAccessToken(const StravaCredential& credentials);
@@ -51,7 +51,7 @@ private:
 	bool refreshActivitySummaryCache();
 	std::shared_ptr<NetworkReply> getActivitySummariesFromStrava(int page, int act_per_page, ErrorDetail& error);
 	int getEstimatedActivityCount();
-	void setLoggedInAthlete();
+	bool setLoggedInAthlete();
 
 	QString _access_token;		// Stored only for the session
 	QString _athlete_id;

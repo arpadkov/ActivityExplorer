@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 
+#include <Activity.h>
 #include <DataProvider.h>
+#include <ErrorDetail.h>
 #include <StravaClient.h>
 #include <StravaCredentials.h>
 
@@ -10,30 +12,48 @@
 
 using namespace Providers::StravaClient;
 
+// =================================================================================== //
+// These tests require a configured StravaClient with valid credentials and activities //
+// =================================================================================== //
+
+static std::shared_ptr<StravaClient> client;
+
 /*
-* Get the StravaClient credentials location, but since QStandardPath depends on
-* the executable name
+* Get the StravaClient location, but since QStandardPath depends on the executable name
 * change test_strava_client to ActivityExplorer
 */
-QString getStravaCredentialsLocationFromTest()
+QString getStravaClientDirectory()
 {
-	QString original_filename = Providers::getDataProviderLocation() +
-		QDir::separator() +
-		STRAVA_CLIENT_FOLDER +
-		QDir::separator() +
-		USER_DATA_FILE;
+	QString original_filename = Providers::getDataProviderLocation() + QDir::separator() + STRAVA_CLIENT_FOLDER;
 
 	return original_filename.replace("test_strava_client", "ActivityExplorer");
 }
 
+void initializeStravaClient()
+{
+	auto credentials_hint = StravaCredential();
+	credentials_hint.readCredentials(getStravaClientDirectory() + QDir::separator() + USER_DATA_FILE);
+
+	auto cl = std::make_shared<StravaClient>();
+	if (cl->initilize(credentials_hint))
+		client = cl;
+}
+
 TEST(TestStravaClient, TestInitialize)
 {
-	auto cl = std::make_shared<StravaClient>();
+	EXPECT_NO_THROW(initializeStravaClient());
+}
 
-	auto credentials_hint = StravaCredential();
-	credentials_hint.readCredentials(getStravaCredentialsLocationFromTest());
+TEST(TestStravaClient, TestOther)
+{
+	if (!client)
+		initializeStravaClient();
 
-	EXPECT_NO_THROW(cl->initilize(credentials_hint));
+	QCoreApplication::setApplicationName("ActivityExplorer");
+
+	ErrorDetail error;
+	auto acts = client->getAllActivities(error);
+	EXPECT_FALSE(acts.empty());
 }
 
 int main(int argc, char* argv[])

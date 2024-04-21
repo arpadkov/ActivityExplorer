@@ -2,10 +2,12 @@
 #include <Map/mapviewwindow.h>
 #include <DataProvider.h>
 #include <Activity.h>
+#include <ErrorDetail.h>
 
 #include "ui_main_window.h"
 
 #include <QDebug>
+#include <QElapsedTimer>
 
 const QString PRODUCT_NAME = "ActivityExplorer";
 const QString COMPANY_NAME = "ArpadKov";
@@ -39,14 +41,24 @@ void MainWindow::testFunction()
 	if (_provider)
 		initilazed = _provider->initilizeProvider();
 
-	if (!initilazed)
+	if (!initilazed) 
 	{
 		qWarning() << "NOT INITILIZED";
 		return;
 	}
 
-	_provider->getAllActivities();
-
+	QElapsedTimer timer;
+	timer.start();
+	ErrorDetail error;
+	auto acts = _provider->getAllActivities(error);
+	int act_num = 1;
+	for (const auto& act : acts)
+	{
+		qInfo() << "ACTIVITY : " << act_num << " - " << act.start_date.toString("yyyy-MM-dd");
+		act_num++;
+	}
+	qint64 elapsedMilliseconds = timer.elapsed();
+	qInfo() << "Total time taken: " << elapsedMilliseconds << " milliseconds";
 
 	//auto map_window = new MapViewWindow(this);
 	//map_window->show();

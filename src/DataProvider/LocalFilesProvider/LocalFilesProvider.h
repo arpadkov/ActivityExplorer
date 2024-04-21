@@ -15,7 +15,7 @@ public:
 	DataProviderSetupWidget* createSetupWidget() override;
 	QString getType() override;
 
-	std::vector<ActivitySummary> getAllActivities() override;
+	std::vector<ActivitySummary> getAllActivities(ErrorDetail& error) override;
 };
 
 } // namespace LocalFilesProvider

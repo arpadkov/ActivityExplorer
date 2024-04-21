@@ -5,10 +5,12 @@
 #include <QString>
 
 // Forwards
+class ErrorDetail;
+
 namespace Providers
 {
 class DataProviderSetupWidget;
-class ActivitySummary;
+struct ActivitySummary;
 }
 
 namespace Providers
@@ -33,7 +35,7 @@ public:
 	virtual DataProviderSetupWidget* createSetupWidget() = 0;
 	virtual QString getType() = 0;
 
-	virtual std::vector<ActivitySummary> getAllActivities() = 0;
+	virtual std::vector<ActivitySummary> getAllActivities(ErrorDetail& error) = 0;
 };
 
 class DataProviderConfiguration

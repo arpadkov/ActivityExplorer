@@ -5,27 +5,28 @@
 #include <QString>
 #include <QDateTime>
 
+// Forwards
+class NetworkReply;
+
 namespace Providers
 {
 
-class ActivitySummary
+struct ActivitySummary
 {
-public:
 	ActivitySummary();
 	~ActivitySummary();
 
-private:
-	QString _id;
-	QString _name;
-	EActivityType _type;
-	float _distance = 0;			// meter
-	float _moving_time = 0;		// second
-	float _elapsed_time = 0;	// second
-	float _elev_gain = 0;			// meter
-	QDateTime _start_date;
-	float _average_speed = 0; // m/s
-	float _max_speed = 0;			// m/s
-	float calories = 0;				// kcal
+	QString id;
+	QString name;
+	EActivityType type;
+	float distance = 0;         // meter
+	float moving_time = 0;      // second
+	float elapsed_time = 0;     // second
+	float elev_gain = 0;        // meter
+	QDateTime start_date;
+	float average_speed = 0;    // m/s
+	float max_speed = 0;        // m/s
+	float calories = 0;         // kcal
 };
 
 }

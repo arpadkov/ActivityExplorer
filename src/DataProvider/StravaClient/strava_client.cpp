@@ -1,4 +1,5 @@
 #include "StravaClient.h"
+#include "StravaActivityConverter.h"
 #include "StravaSetupWidget.h"
 #include "StravaCredentials.h"
 
@@ -26,13 +27,42 @@ QString getStravaClientLocation()
 
 namespace
 {
+QDir getStravaCacheLocation()
+{
+	const QString& file_location = getStravaClientLocation() + QDir::separator() + ACTIVITY_CACHE_FOLDER_NAME;
+	return QDir(file_location);
+}
+
+bool deleteStravaCache()
+{
+	auto dir = getStravaCacheLocation();
+
+	if (!dir.exists())
+	{
+		qDebug() << "Strava cache directory does not exist. " << dir.absolutePath();
+		return false;
+	}
+
+	// Remove all files within the directory
+	QStringList files = dir.entryList(QDir::Files);
+	for (const QString& file : files)
+	{
+		if (!dir.remove(file))
+		{
+			qDebug() << "Failed to remove file:" << file;
+			return false;
+		}
+	}
+
+	return true;
+}
+
 bool writeActivityToFileFromReply(const NetworkReply& reply)
 {
 	const QJsonDocument& data = reply.getData();
-	const QString& file_location = getStravaClientLocation() + QDir::separator() + ACTIVITY_CACHE_FOLDER_NAME;
 
 	// Check if folder exists, create if not
-	QDir dir(file_location);
+	auto dir = getStravaCacheLocation();
 	if (!dir.exists())
 	{
 		if (!dir.mkdir("."))
@@ -56,6 +86,13 @@ bool writeActivityToFileFromReply(const NetworkReply& reply)
 
 	QString full_filename = dir.absolutePath() + QDir::separator() + filename + ".json";
 	QFile file(full_filename);
+
+	if (file.exists())
+	{
+		// qDebug() << "Skipping write file, because it exists already: " << full_filename;
+		return true;
+	}
+
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
 		qDebug() << "Could not create file: " << full_filename;
@@ -65,6 +102,7 @@ bool writeActivityToFileFromReply(const NetworkReply& reply)
 	QTextStream out(&file);
 	out << data.toJson();
 	file.close();
+	qDebug() << "Created file: " << full_filename;
 
 	return true;
 }
@@ -115,12 +153,60 @@ QString StravaClient::getType()
 	return STRAVA_CLIENT;
 }
 
-std::vector<ActivitySummary> StravaClient::getAllActivities()
+/*
+*	Gets al the activity summaries. Checks for the latest 100 activities, takes about 2 seconds
+*/
+std::vector<ActivitySummary> StravaClient::getAllActivities(ErrorDetail& error)
 {
 	setLoggedInAthlete();
-	refreshActivitySummaryCache();
 
-	return std::vector<ActivitySummary>();
+	auto dir = getStravaCacheLocation();
+	if (!dir.exists() || dir.entryList(QDir::Files).isEmpty())
+	{
+		// Refresh whole cache if cache directory does not exist, or is empty
+		refreshActivitySummaryCache();
+	}
+	else
+	{
+		// Get and write the last 100 activities
+		auto latest_acts = getActivitySummariesFromStrava(1, 100, error);
+		if (!latest_acts)
+		{
+			qWarning() << "(StravaClient): Got error reply when trying to get activities: " << error.getMessage();
+			return {};
+		}
+	
+		for (const auto& act_reply : latest_acts->getArray())
+		{
+			writeActivityToFileFromReply(act_reply);
+		}
+	}
+
+	// Read all activities from cache
+	for (const auto& file_str : dir.entryList(QDir::Files))
+	{
+		QFile file(dir.filePath(file_str));
+		if (!file.open(QIODevice::ReadOnly))
+		{
+			qWarning() << "(StravaClient): Could not open file: " << file_str;
+			continue;
+		}
+
+		// Create a NetworkReply to parse the json data
+		auto reply_from_file = NetworkReply(file.readAll());
+		auto act_summary = activitySummaryFromStravaReply(reply_from_file, error);
+		if (!act_summary)
+		{
+			qWarning() << "(StravaClient): Could not create ActivitySummary from file: " << file_str;
+			continue;
+		}
+
+		file.close();
+		_act_summaries.push_back(*act_summary);
+	}
+
+
+	return _act_summaries;
 }
 
 bool StravaClient::setAccessToken(const StravaCredential& credentials)
@@ -155,9 +241,13 @@ void StravaClient::authorizeRequest(NetworkRequest& request) const
 
 bool StravaClient::refreshActivitySummaryCache()
 {
+	qInfo() << "(StravaClient) Refreshing activity cache";
+
 	auto client = HttpClient::get();
 	if (!client)
 		return false;
+
+	deleteStravaCache();
 
 	int estimated_act_count = getEstimatedActivityCount();
 	if (estimated_act_count > 15000)
@@ -182,8 +272,7 @@ bool StravaClient::refreshActivitySummaryCache()
 		{
 			if (!writeActivityToFileFromReply(act_reply))
 			{
-				qDebug() << "Could not write activities";
-				return false;
+				qDebug() << "(StravaClient): Could not write activitiy: " << act_reply.getRawData();
 			}
 		}
 
@@ -245,11 +334,11 @@ int StravaClient::getEstimatedActivityCount()
 	return activity_count;
 }
 
-void StravaClient::setLoggedInAthlete()
+bool StravaClient::setLoggedInAthlete()
 {
 	auto client = HttpClient::get();
 	if (!client)
-		return;
+		return false;
 
 	NetworkRequest request(LOGGED_IN_ATHLETE_URL, NetworkRequestType::GET);
 	authorizeRequest(request);
@@ -260,7 +349,7 @@ void StravaClient::setLoggedInAthlete()
 	{
 		qWarning() << "(StravaClient): Could not get logged in athlete";
 		qDebug() << error.getMessage();
-		return;
+		return false;
 	}
 
 	auto athlete_id = reply->getIntValue("id");
@@ -268,10 +357,11 @@ void StravaClient::setLoggedInAthlete()
 	{
 		qWarning() << "(StravaClient): The reply did not contain the athlete id";
 		qDebug() << reply->getRawData();
-		return;
+		return false;
 	}
 
 	_athlete_id = QString::number(*athlete_id);
+	return true;
 }
 
 
