@@ -25,6 +25,7 @@ endforeach()
 endmacro()
 
 add_subdirectory(Map)
+add_subdirectory(Widgets)
 
 qt_add_qml_module(ActivityExplorer
     URI QmlForms
