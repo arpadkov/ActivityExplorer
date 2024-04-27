@@ -87,7 +87,7 @@ std::optional<ActivitySummary> activitySummaryFromStravaReply(const NetworkReply
 {
   ActivitySummary act_summary;
 
-  act_summary.id = reply.getStringValue("id").value_or("");
+  act_summary.id = QString::number(reply.getIntValue("id").value_or(0));
   act_summary.name = reply.getStringValue("name").value_or("");
 
   // Get activity type from string

@@ -47,18 +47,18 @@ void MainWindow::testFunction()
 		return;
 	}
 
-	QElapsedTimer timer;
-	timer.start();
+
 	ErrorDetail error;
-	auto acts = _provider->getAllActivities(error);
+	auto acts = _provider->getActivitySummaries();
 	int act_num = 1;
 	for (const auto& act : acts)
 	{
-		qInfo() << "ACTIVITY : " << act_num << " - " << act.start_date.toString("yyyy-MM-dd");
+		//qInfo() << "ACTIVITY : " << act_num << " - " << act.start_date.toString("yyyy-MM-dd");
 		act_num++;
 	}
-	qint64 elapsedMilliseconds = timer.elapsed();
-	qInfo() << "Total time taken: " << elapsedMilliseconds << " milliseconds";
+
+	qInfo() << "HAS ACTIVITIES: " << acts.size();
+
 
 	//auto map_window = new MapViewWindow(this);
 	//map_window->show();

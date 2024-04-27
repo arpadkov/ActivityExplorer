@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Activity.h"
 #include <StravaClient/StravaCredentials.h>
+
 #include <QObject>
 #include <QString>
 
@@ -30,12 +32,17 @@ public:
 	DataProvider();
 
 	bool initilizeProvider();
+	virtual std::vector<ActivitySummary> getActivitySummaries() final;
 
 	virtual bool initilize(const DataProviderInitializationHint& init_hint = {}) = 0;
 	virtual DataProviderSetupWidget* createSetupWidget() = 0;
 	virtual QString getType() = 0;
 
-	virtual std::vector<ActivitySummary> getAllActivities(ErrorDetail& error) = 0;
+Q_SIGNALS:
+	void activitySummariesChanged();
+
+protected:
+	std::vector<ActivitySummary> _act_summaries;
 };
 
 class DataProviderConfiguration

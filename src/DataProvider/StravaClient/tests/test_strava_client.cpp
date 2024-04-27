@@ -31,6 +31,7 @@ QString getStravaClientDirectory()
 
 void initializeStravaClient()
 {
+	QCoreApplication::setApplicationName("ActivityExplorer");
 	auto credentials_hint = StravaCredential();
 	credentials_hint.readCredentials(getStravaClientDirectory() + QDir::separator() + USER_DATA_FILE);
 
@@ -44,15 +45,14 @@ TEST(TestStravaClient, TestInitialize)
 	EXPECT_NO_THROW(initializeStravaClient());
 }
 
-TEST(TestStravaClient, TestOther)
+TEST(TestStravaClient, TestGetActivitySummaries)
 {
 	if (!client)
 		initializeStravaClient();
 
-	QCoreApplication::setApplicationName("ActivityExplorer");
 
 	ErrorDetail error;
-	auto acts = client->getAllActivities(error);
+	auto acts = client->getActivitySummaries();
 	EXPECT_FALSE(acts.empty());
 }
 

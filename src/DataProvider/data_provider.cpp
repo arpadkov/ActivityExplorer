@@ -46,6 +46,11 @@ bool DataProvider::initilizeProvider()
 	}
 }
 
+std::vector<ActivitySummary> DataProvider::getActivitySummaries()
+{
+	return _act_summaries;
+}
+
 /*
 * Opens a dialog, where the type of the DataProvider can be selected, and configured
 */

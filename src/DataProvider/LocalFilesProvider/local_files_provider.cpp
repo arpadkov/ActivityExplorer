@@ -25,9 +25,4 @@ QString LocalFilesProvider::getType()
 	return LOCAL_PROVIDER;
 }
 
-std::vector<ActivitySummary> LocalFilesProvider::getAllActivities(ErrorDetail& error)
-{
-	return std::vector<ActivitySummary>();
-}
-
 }

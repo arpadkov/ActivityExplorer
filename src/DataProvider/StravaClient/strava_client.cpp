@@ -1,5 +1,6 @@
 #include "StravaClient.h"
 #include "StravaActivityConverter.h"
+#include "StravaActivityReaderThread.h"
 #include "StravaSetupWidget.h"
 #include "StravaCredentials.h"
 
@@ -57,6 +58,10 @@ bool deleteStravaCache()
 	return true;
 }
 
+/*
+*	Writes the activity as a NetworkReply to a file.
+* Does not overwrite existing files
+*/
 bool writeActivityToFileFromReply(const NetworkReply& reply)
 {
 	const QJsonDocument& data = reply.getData();
@@ -140,6 +145,10 @@ bool StravaClient::initilize(const DataProviderInitializationHint& init_hint)
 	if (!setAccessToken(credentials))
 		throw std::runtime_error("Could not set access token");
 
+	ErrorDetail error;
+	if (!setActivitySummaries(error))
+		throw error;
+
 	return true;
 }
 
@@ -154,59 +163,103 @@ QString StravaClient::getType()
 }
 
 /*
-*	Gets al the activity summaries. Checks for the latest 100 activities, takes about 2 seconds
+*	Sets all the activity summaries internally.
+* Checks for the latest 100 activities, or doea full update if cache is empty
 */
-std::vector<ActivitySummary> StravaClient::getAllActivities(ErrorDetail& error)
+bool StravaClient::setActivitySummaries(ErrorDetail& error)
 {
 	setLoggedInAthlete();
 
-	auto dir = getStravaCacheLocation();
-	if (!dir.exists() || dir.entryList(QDir::Files).isEmpty())
+
+	// 1. Check if cache is empty
+	const auto& dir = getStravaCacheLocation();
+	const auto& files = dir.entryList(QDir::Files);
+	if (!dir.exists() || files.isEmpty())
 	{
 		// Refresh whole cache if cache directory does not exist, or is empty
 		refreshActivitySummaryCache();
 	}
+	// 2. Start reading in cache asynchronus
+	// 3. Load last 100 until all 100 is already in cache
+	//    -> push act if not already in _acts
 	else
 	{
-		// Get and write the last 100 activities
-		auto latest_acts = getActivitySummariesFromStrava(1, 100, error);
-		if (!latest_acts)
+		int worker_count = 4;		// TODO: this could be configureable, or adjusted from the CPU-s core count
+		int files_per_worker = files.size() / worker_count;
+		int remaining_files = files.size() % worker_count;
+
+		// Create workers
+		for (int i = 0; i < worker_count; i++)
 		{
-			qWarning() << "(StravaClient): Got error reply when trying to get activities: " << error.getMessage();
-			return {};
+			auto first_file_it = files.begin() + i * files_per_worker;
+			auto last_file_it = first_file_it + files_per_worker;
+
+			// For the last worker, assign remaining files
+			if (i == worker_count - 1)
+				last_file_it = files.end();
+
+			std::vector<QString> worker_files(first_file_it, last_file_it);
+			auto worker = new StravaActivityReaderThread(worker_files, dir, this);
+			connect(worker, &StravaActivityReaderThread::finished, worker, &QObject::deleteLater);
+			connect(worker, &StravaActivityReaderThread::readFinished, this, [this](const std::vector<ActivitySummary>& acts)
+				{
+					_act_summaries.insert(_act_summaries.end(), acts.begin(), acts.end());
+					Q_EMIT activitySummariesChanged();
+				});
+
+
+			worker->start();
 		}
-	
-		for (const auto& act_reply : latest_acts->getArray())
+
+
+		// Get and write the last 100 activities until there are no new activities found
+		auto act_found = [this](const ActivitySummary& act) -> bool
+			{
+				return std::find(_act_summaries.begin(), _act_summaries.end(), act) != _act_summaries.end();
+			};
+
+
+		int page = 1;
+		bool contains_new = true;
+		while (contains_new)
 		{
-			writeActivityToFileFromReply(act_reply);
+			contains_new = false;
+
+			auto latest_acts = getActivitySummariesFromStrava(page, 20, error);
+			if (!latest_acts)
+			{
+				qWarning() << "(StravaClient): Got error reply when trying to get activities: " << error.getMessage();
+				return false;
+			}
+
+			// Loop over activities from the latest page
+			for (const auto& act_reply : latest_acts->getArray())
+			{
+				writeActivityToFileFromReply(act_reply);
+
+				auto act_summary = activitySummaryFromStravaReply(act_reply, error);
+				if (!act_summary)
+				{
+					qWarning() << "(StravaClient): Could not create ActivitySummary from reply";
+					qDebug() << act_reply.getRawData();
+					continue;
+				}
+
+				if (!act_found(*act_summary))
+				{
+					_act_summaries.push_back(*act_summary);
+					contains_new = true;
+				}
+
+				Q_EMIT activitySummariesChanged();
+
+			}
+			page++;
 		}
 	}
 
-	// Read all activities from cache
-	for (const auto& file_str : dir.entryList(QDir::Files))
-	{
-		QFile file(dir.filePath(file_str));
-		if (!file.open(QIODevice::ReadOnly))
-		{
-			qWarning() << "(StravaClient): Could not open file: " << file_str;
-			continue;
-		}
 
-		// Create a NetworkReply to parse the json data
-		auto reply_from_file = NetworkReply(file.readAll());
-		auto act_summary = activitySummaryFromStravaReply(reply_from_file, error);
-		if (!act_summary)
-		{
-			qWarning() << "(StravaClient): Could not create ActivitySummary from file: " << file_str;
-			continue;
-		}
-
-		file.close();
-		_act_summaries.push_back(*act_summary);
-	}
-
-
-	return _act_summaries;
+	return true;
 }
 
 bool StravaClient::setAccessToken(const StravaCredential& credentials)

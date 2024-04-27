@@ -29,4 +29,9 @@ struct ActivitySummary
 	float calories = 0;         // kcal
 };
 
+bool operator==(const ActivitySummary& lhs, const ActivitySummary& rhs);
+bool operator!=(const ActivitySummary& lhs, const ActivitySummary& rhs);
+
+Q_DECLARE_METATYPE(ActivitySummary)
+
 }
