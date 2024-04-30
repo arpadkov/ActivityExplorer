@@ -15,10 +15,58 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+    <widget class="Widgets::ActivityCollectionChartConfig" name="chart_config_w" native="true"/>
+   </item>
+   <item>
+    <widget class="Widgets::ActivityFilterWidget" name="act_filter_w" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Widgets::ActivityCollectionChart" name="act_collection_chart">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>800</width>
+       <height>500</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Widgets::ActivityFilterWidget</class>
+   <extends>QWidget</extends>
+   <header>ActivityFilterWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Widgets::ActivityCollectionChartConfig</class>
+   <extends>QWidget</extends>
+   <header>ActivityCollectionChartConfig.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Widgets::ActivityCollectionChart</class>
+   <extends>QGraphicsView</extends>
+   <header>ActivityCollectionChart.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

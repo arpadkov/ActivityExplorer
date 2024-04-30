@@ -17,7 +17,7 @@ set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 # Enable C++ exception handling
 add_compile_options(/EHsc)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets WebEngineWidgets LinguistTools Core Gui Qml Network Quick Positioning Location)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Charts WebEngineWidgets LinguistTools Core Gui Qml Network Quick Positioning Location)
 
 
 # Setup GoogleTest

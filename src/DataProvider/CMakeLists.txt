@@ -12,6 +12,8 @@ add_library(DataProvider STATIC
     "${dir}/activity.cpp"
     "${dir}/ActivityType.h"
     "${dir}/setup_data_provider.ui"
+    "${dir}/ActivityFilter.h"
+    "${dir}/activity_filter.cpp"
 )
 
 target_link_libraries(DataProvider PUBLIC

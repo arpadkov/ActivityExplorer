@@ -5,6 +5,7 @@
 #include <ErrorDetail.h>
 
 #include "ui_main_window.h"
+#include <ActivityOverviewWidget.h>
 
 #include <QDebug>
 #include <QElapsedTimer>
@@ -21,11 +22,15 @@ MainWindow::MainWindow(QWidget* parent)
 	QObject::connect(
 		ui->test_button, &QPushButton::clicked, this, &MainWindow::testFunction);
 
+	// Menu actions
 	QObject::connect(ui->act_setup_data_provider, &QAction::triggered, this, []()
 		{
 			Providers::configureDataProvider();
 		});
 
+	// Confugre main tab widget
+	auto act_overview_w = new Widgets::ActivityOverviewWidget(this);
+	ui->tab_widget->addTab(act_overview_w, "Activities");
 
 }
 
