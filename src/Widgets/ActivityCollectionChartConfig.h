@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QPushButton>
 
 namespace Widgets
 {
@@ -13,6 +14,18 @@ public:
 	ActivityCollectionChartConfig(QWidget* parent);
 	~ActivityCollectionChartConfig();
 
+};
+
+class CheckStackedButton : public QPushButton
+{
+	Q_OBJECT
+
+public:
+	CheckStackedButton(QWidget* parent);
+	~CheckStackedButton();
+
+protected:
+	void mousePressEvent(QMouseEvent* event) override;
 };
 
 }

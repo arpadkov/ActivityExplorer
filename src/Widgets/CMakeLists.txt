@@ -8,6 +8,7 @@ target_sources(ActivityExplorer PRIVATE
 	"${dir}/ActivityCollectionChart.h" "${dir}/activity_collection_chart.cpp"
 	"${dir}/ActivityFilterWidget.h" "${dir}/activity_filter_widget.cpp"
 	"${dir}/ActivityCollectionChartConfig.h" "${dir}/activity_collection_chart_config.cpp"
+	"${dir}/ButtonGroupWidget.h" "${dir}/button_group_widget.cpp"
 )
 
 target_include_directories(ActivityExplorer PUBLIC ${dir})
