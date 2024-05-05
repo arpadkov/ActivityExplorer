@@ -1,4 +1,5 @@
 #include "ActivityFilterWidget.h"
+#include "ActivityOverviewModel.h"
 #include "ButtonGroupWidget.h"
 
 #include <QPalette>
@@ -18,10 +19,10 @@ ActivityFilterWidget::ActivityFilterWidget(QWidget* parent) : QWidget(parent)
 
 	// Grouped by widget
 	auto grouped_by_w = new ButtonGroupWidget("group by", this);
-	grouped_by_w->addButton("year", static_cast<int>(EGroupedBy::Year));
-	grouped_by_w->addButton("month", static_cast<int>(EGroupedBy::Month));
-	grouped_by_w->addButton("day", static_cast<int>(EGroupedBy::Day));
-	grouped_by_w->setCheckedButton(static_cast<int>(EGroupedBy::Year));
+	grouped_by_w->addButton("year", static_cast<int>(EActivityGroupedBy::Year));
+	grouped_by_w->addButton("month", static_cast<int>(EActivityGroupedBy::Month));
+	grouped_by_w->addButton("day", static_cast<int>(EActivityGroupedBy::Day));
+	grouped_by_w->setCheckedButton(static_cast<int>(EActivityGroupedBy::Year));
 
 
 	auto layout = new QHBoxLayout(this);

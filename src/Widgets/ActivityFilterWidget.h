@@ -5,16 +5,14 @@
 #include <QCalendarWidget>
 #include <QTextCharFormat>
 
+// Forwards
 namespace Widgets
 {
+enum class EActivityGroupedBy : int;
+}
 
-enum class EGroupedBy : int
+namespace Widgets
 {
-	Unknown = 0,
-	Year = 1,
-	Month = 2,
-	Day = 3
-};
 
 class RangeCalendarWidget : public QCalendarWidget
 {

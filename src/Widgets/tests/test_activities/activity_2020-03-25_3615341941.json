@@ -1,0 +1,63 @@
+{
+    "achievement_count": 0,
+    "athlete": {
+        "id": 61345806,
+        "resource_state": 1
+    },
+    "athlete_count": 1,
+    "average_cadence": 69.7,
+    "average_speed": 2.051,
+    "comment_count": 0,
+    "commute": false,
+    "display_hide_heartrate_option": false,
+    "distance": 2779.3,
+    "elapsed_time": 2559,
+    "elev_high": 129.6,
+    "elev_low": 70.1,
+    "end_latlng": [
+        52.341594,
+        9.628197
+    ],
+    "external_id": "stripped_health_data_61345806_1592159367.gpx",
+    "flagged": false,
+    "from_accepted_tag": false,
+    "gear_id": null,
+    "has_heartrate": false,
+    "has_kudoed": false,
+    "heartrate_opt_out": false,
+    "id": 3615341941,
+    "kudos_count": 0,
+    "location_city": null,
+    "location_country": "Germany",
+    "location_state": null,
+    "manual": false,
+    "map": {
+        "id": "a3615341941",
+        "resource_state": 2,
+        "summary_polyline": "qvp~Ho{yy@Ab@Dj@Mv@Fd@?b@F`@CbAL`@?t@Dz@@PLXAfAP\\?HGX@PFR\\rBL^B`@PLRVJX@XH\\HLTLLb@n@jADRFDJAFDBENIFKRGRC@BNFXd@Lb@@TLXKDDCP\\LPTNFLXVLBDDp@ERJTCX@RA`@TBDXFLETJRRBHNR\\RT`@@NCVDJTVXPBFHFDNBAAHNV@THRLDNVPNHBBJHB^VVHd@`@TVPJNNd@^HBNPLHRTp@x@JH\\n@hA`ADPLLHRPPJDXb@VJHLTLx@v@^x@PRFRJPHFJVFRHLBRHRT^LXj@fBFJDV\\j@Lb@f@p@Rf@TRDL^VRTr@ZX`@t@^TRFBRTL\\XTZNHLPHb@@BHNJb@NRPV?VEN?t@d@NDNAVFRER?PGbACNBXRH@j@?NEBB@ECUI]We@CCQCe@oAIK_@OEMWY]WcBkBM_@?YGMCSBWDSCO?IPq@NUJ_@Xm@AOJYDm@Lc@A[BKJSAGDi@L_@HKP?HDZ?\\NV@b@J"
+    },
+    "max_speed": 4.2,
+    "moving_time": 1355,
+    "name": "Afternoon Run",
+    "photo_count": 0,
+    "pr_count": 0,
+    "private": false,
+    "resource_state": 2,
+    "sport_type": "Run",
+    "start_date": "2020-03-25T13:00:03Z",
+    "start_date_local": "2020-03-25T14:00:03Z",
+    "start_latlng": [
+        52.355774,
+        9.640406
+    ],
+    "timezone": "(GMT+01:00) Europe/Berlin",
+    "total_elevation_gain": 64.7,
+    "total_photo_count": 0,
+    "trainer": false,
+    "type": "Run",
+    "upload_id": 3859545459,
+    "upload_id_str": "3859545459",
+    "utc_offset": 3600,
+    "visibility": "everyone",
+    "workout_type": null
+}

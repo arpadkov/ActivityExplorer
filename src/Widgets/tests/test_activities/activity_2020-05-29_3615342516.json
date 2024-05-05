@@ -1,0 +1,63 @@
+{
+    "achievement_count": 4,
+    "athlete": {
+        "id": 61345806,
+        "resource_state": 1
+    },
+    "athlete_count": 1,
+    "average_cadence": 81.2,
+    "average_speed": 2.837,
+    "comment_count": 0,
+    "commute": false,
+    "display_hide_heartrate_option": false,
+    "distance": 20492.3,
+    "elapsed_time": 7226,
+    "elev_high": 118.3,
+    "elev_low": 56.5,
+    "end_latlng": [
+        52.341587,
+        9.628218
+    ],
+    "external_id": "stripped_health_data_61345806_1592159369.gpx",
+    "flagged": false,
+    "from_accepted_tag": false,
+    "gear_id": null,
+    "has_heartrate": false,
+    "has_kudoed": false,
+    "heartrate_opt_out": false,
+    "id": 3615342516,
+    "kudos_count": 0,
+    "location_city": null,
+    "location_country": "Germany",
+    "location_state": null,
+    "manual": false,
+    "map": {
+        "id": "a3615342516",
+        "resource_state": 2,
+        "summary_polyline": "e}m~H_rwy@NnAVVb@JVXh@@dEx@|B?xATHzAMbACzCQlDAjBTf@`@LDTErAHVXNdCPEv@s@|Fc@|BIjAp@b@v@NnAj@fDl@fEnAjAhB~AfEnAvBh@p@nAdAjF~H\\hAh@zFZzB?vBG`AElD[|AeAxCwAfA}@?s@_@kEgAuAKiBaAm@e@YLOt@Gf@I|BG^KJuBHoAKgCV}CBcC[a@a@[kAWwBi@eAe@eBMeBLcDk@wEUa@DQEO{@c@cBqBo@a@uBa@{BJqAi@S?SXg@lBs@xDc@jDo@nDkArKGL}@pGGfADrBSlC?XPPtA`@PXu@pIQb@c@VmGB_Ep@]_@]MqBA}IgC[?S\\iDjKoClJoBbG[LgCg@MBMP_BxNk@xGgAlOa@vGi@tRk@bNaAxYBb@NHhEg@p@DHLjAfK\\`LIrAV~BP|BNtDf@rG@fBM~Ba@zBExA_@`B[fE[fCOl@O|B[lDOz@KjAu@fDIhBa@dCAn@Op@A|As@vEArASpBGnBkAdGgAnJSh@e@@y@u@S_@gAw@eAsAkAiAk@aB[i@k@c@i@{@Gk@cBqBi@eAw@cAQo@@oAPeCf@eFd@mGZaDd@iDj@_Gn@}H@a@GM]UuCo@oQsCsJiAmCc@KKKkAuAuIMgIm@gFFYRIhDLNKJWBu@EqCFeGHuEFeB^yEh@iGH{AGk@aAc@kAgAmAi@yE_BoAWiAm@gBYuCyAwCiAsA[c@WwA_Eo@uCsAqDoAeEAYNUnGuBNWi@yEc@cF]{BuAeNoBsTwBoRcAeLH[dFiBJUo@iKs@wVo@eOu@cV~NYVKNWCgBFgEMuCBoCNcCk@uC@sCFoAEiA?{BOoBCkCFi@jAuEr@aCPuBD_CHQVWtAYj@sAv@sCf@u@bAIpAaAzBi@d@WLg@YmAFq@nB{CzCqDE[g@gAy@eCiCuJk@qA[{A?StAgDnBqGbAsBh@k@\\{@|@aAZg@VyBf@}Ab@y@h@_CNsBCmBV}ALK~AbAvDVnCEr@PDN@rBWxDPZ~B\\XPj@@zAp@l@Jj@Kn@a@t@S`Cj@\\fAp@bD?dAb@dFH`@NLn@Qj@c@x@qAd@c@T_@r@kBRShB}Dx@_Ar@Sl@Dv@]xCWZFhAv@lAbBlA~Cd@v@\\dAzA`DnAjDrB|G`@|@pDpHhFvH`EhJtCdFfBtCrBbChD~EjElFvBlBjAX"
+    },
+    "max_speed": 5.5,
+    "moving_time": 7222,
+    "name": "Lunch Run",
+    "photo_count": 0,
+    "pr_count": 2,
+    "private": false,
+    "resource_state": 2,
+    "sport_type": "Run",
+    "start_date": "2020-05-29T10:49:23Z",
+    "start_date_local": "2020-05-29T12:49:23Z",
+    "start_latlng": [
+        52.341479,
+        9.628644
+    ],
+    "timezone": "(GMT+01:00) Europe/Berlin",
+    "total_elevation_gain": 135.2,
+    "total_photo_count": 0,
+    "trainer": false,
+    "type": "Run",
+    "upload_id": 3859545617,
+    "upload_id_str": "3859545617",
+    "utc_offset": 7200,
+    "visibility": "everyone",
+    "workout_type": null
+}

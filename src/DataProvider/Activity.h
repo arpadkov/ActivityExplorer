@@ -27,6 +27,18 @@ struct ActivitySummary
 	float average_speed = 0;    // m/s
 	float max_speed = 0;        // m/s
 	float calories = 0;         // kcal
+
+	/* These attributes are accessible for summaries */
+	enum class ESummableAttribute : int
+	{
+		Distance = 1,
+		MovingTime = 2,
+		ElapsedTime = 3,
+		ElevationGain = 4,
+		Calories = 5
+	};
+	float getSummableAttribute(ESummableAttribute attribute) const;
+
 };
 
 bool operator==(const ActivitySummary& lhs, const ActivitySummary& rhs);

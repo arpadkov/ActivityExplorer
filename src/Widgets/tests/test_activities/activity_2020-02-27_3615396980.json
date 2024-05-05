@@ -1,0 +1,62 @@
+{
+    "achievement_count": 4,
+    "athlete": {
+        "id": 61345806,
+        "resource_state": 1
+    },
+    "athlete_count": 1,
+    "average_speed": 3.702,
+    "comment_count": 0,
+    "commute": false,
+    "display_hide_heartrate_option": false,
+    "distance": 1806.5,
+    "elapsed_time": 2853,
+    "elev_high": 129.1,
+    "elev_low": 86.2,
+    "end_latlng": [
+        52.341617,
+        9.628316
+    ],
+    "external_id": "stripped_health_data_61345806_1592160039.gpx",
+    "flagged": false,
+    "from_accepted_tag": false,
+    "gear_id": null,
+    "has_heartrate": false,
+    "has_kudoed": false,
+    "heartrate_opt_out": false,
+    "id": 3615396980,
+    "kudos_count": 0,
+    "location_city": null,
+    "location_country": "Germany",
+    "location_state": null,
+    "manual": false,
+    "map": {
+        "id": "a3615396980",
+        "resource_state": 2,
+        "summary_polyline": "wkl~H{~ty@_Ay@y@k@_@YlEqAy@wAg@w@OKc@SkA{@SUe@s@Ma@KgAIc@_@{@k@q@g@g@OGOOo@WQOYMKCY@e@OYFGAGKQMa@MOMkA[q@Me@Ww@UaAe@QCKEaASSKSU}@]MSSKYUg@YOs@e@gAGYa@eAQY_@]q@eAa@_@KWKIKQc@_@a@i@o@a@e@g@s@[[UGKUw@QOCQQmCLq@^sDP}@@eAEq@JuAVSXGH@FBr@f@n@L"
+    },
+    "max_speed": 13.1,
+    "moving_time": 488,
+    "name": "Afternoon Run",
+    "photo_count": 0,
+    "pr_count": 2,
+    "private": false,
+    "resource_state": 2,
+    "sport_type": "Run",
+    "start_date": "2020-02-27T13:06:05Z",
+    "start_date_local": "2020-02-27T14:06:05Z",
+    "start_latlng": [
+        52.33356,
+        9.615344
+    ],
+    "timezone": "(GMT+01:00) Europe/Berlin",
+    "total_elevation_gain": 17.3,
+    "total_photo_count": 0,
+    "trainer": false,
+    "type": "Run",
+    "upload_id": 3859604246,
+    "upload_id_str": "3859604246",
+    "utc_offset": 3600,
+    "visibility": "everyone",
+    "workout_type": null
+}

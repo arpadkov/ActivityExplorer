@@ -44,7 +44,7 @@ macro(add_test_with_linked_libs TEST_NAME)
     Qt6::Widgets
     ${ARGN}
     )
-    gtest_discover_tests(${TEST_NAME})
+    gtest_discover_tests(${TEST_NAME} WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 endmacro()
 
 include_directories(src)

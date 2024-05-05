@@ -1,0 +1,63 @@
+{
+    "achievement_count": 2,
+    "athlete": {
+        "id": 61345806,
+        "resource_state": 1
+    },
+    "athlete_count": 1,
+    "average_cadence": 80.8,
+    "average_speed": 2.811,
+    "comment_count": 0,
+    "commute": false,
+    "display_hide_heartrate_option": false,
+    "distance": 20187.5,
+    "elapsed_time": 7298,
+    "elev_high": 113.5,
+    "elev_low": 56.5,
+    "end_latlng": [
+        52.341633,
+        9.628211
+    ],
+    "external_id": "stripped_health_data_61345806_1592159369.gpx",
+    "flagged": false,
+    "from_accepted_tag": false,
+    "gear_id": null,
+    "has_heartrate": false,
+    "has_kudoed": false,
+    "heartrate_opt_out": false,
+    "id": 3615342510,
+    "kudos_count": 0,
+    "location_city": null,
+    "location_country": "Germany",
+    "location_state": null,
+    "manual": false,
+    "map": {
+        "id": "a3615342510",
+        "resource_state": 2,
+        "summary_polyline": "ssm~Hykwy@f@NCCBLEA?VEFBHKND^E^BPOP@TOdAGdB]`CFRAR{@dGBrCf@xBz@jBnAJ~C`AR?Z`@b@VzC\\LX`@?`@PhAbAfB^zA@x@l@t@`AnBrFnDtD|F`K\\z@j@vCHx@BlAPjAChEOfE[pA{AxDy@f@iA?eFqAEHMCmD_BoA]GBIPK`EK|@aCL}NLUSW{@MkCSw@C_@BEaAmAYyABiALcABuAk@mGkBu@_AuAk@]wCk@}AJaCi@SN[|@c@tBqBbN{A|KShCe@rCC`AD~AOxCDPLJrAXJN@Nc@lEMtBUz@_@TsFD}D|@i@k@_D[uHuBg@CgAnB{CnI{FxQWN}Bc@YN_CxQsBbYqBhl@k@rMK~EFRHF|AEtC_@H@HTr@jFVtCJdCN|FA~Af@hEVdFb@`FBzAe@dE?hAI`@CpAM|Ai@fCUpBg@dCKv@ClAe@zCm@jGi@pCK`B@f@[fDMjAe@fBg@xFm@lEEfBy@dH}@hE_@^c@W{@gA_AmBaBqBUm@mA_B{AsCgA_Bi@i@s@_AY{@?cBH{AT_DRsAHaB`AmMf@yE`@uF@mATcBIYi@e@{@YcCWuFeA{VqDe@Sk@yE}@sEIkIOiBYwBHWJG|CTZSFWDo@EcHh@{KA{@F[?s@Hw@CcDLyADaBFWCYQo@y@gAk@a@qDaAq@g@}Ae@qAq@i@CwC}@}EwBoC_A_@}@i@kBwDcLm@}CDQp@_@bF{AHOBUiBuQi@sG_CsUYuBaAiLo@gF_AyK@a@xDqAf@UHS_@iIaCar@WsFK_EHKlNE^OPYC_DF_DI{DFoDa@eD@eKa@eGJsA`AqEl@iBf@wDByAJq@NS`Ac@Xy@lA}BNg@b@e@~Ag@tAw@x@YjAQJOBYW{AFa@tAsBtBgC`AwA@SMg@mAkDcCsIuAyDE[~@oBvAcE^yAR_@h@aBvA_Bf@}@j@q@R_BViA\\oAz@iBd@yBHyAGm@Au@NmALQb@Fh@f@z@N`ENtC^B|BUrCFd@FDlB`@d@XdC^~AHh@]bASv@F|@\\Rb@Ll@NlARnDVtA\\dDLRNCjA{@rC_E~A}Cr@_B|@wAlEO`B[fARh@\\`Az@p@fAdBzEl@dAf@nAfBbFfB`GdDfHtBfD~@`B`BlBnEfKnE|HhNzQbC~BrAb@"
+    },
+    "max_speed": 4.6,
+    "moving_time": 7181,
+    "name": "Afternoon Run",
+    "photo_count": 0,
+    "pr_count": 0,
+    "private": false,
+    "resource_state": 2,
+    "sport_type": "Run",
+    "start_date": "2020-04-04T12:07:24Z",
+    "start_date_local": "2020-04-04T14:07:24Z",
+    "start_latlng": [
+        52.339946,
+        9.627651
+    ],
+    "timezone": "(GMT+01:00) Europe/Berlin",
+    "total_elevation_gain": 131.1,
+    "total_photo_count": 0,
+    "trainer": false,
+    "type": "Run",
+    "upload_id": 3859545620,
+    "upload_id_str": "3859545620",
+    "utc_offset": 7200,
+    "visibility": "everyone",
+    "workout_type": null
+}

@@ -19,7 +19,7 @@ ActivityCollectionChartConfig::ActivityCollectionChartConfig(QWidget* parent) : 
 	activities_w->addButton("walk", 3);
 	activities_w->addButton("ride", 4);
 
-	auto datas_w = new ButtonGroupWidget("activities", this);
+	auto datas_w = new ButtonGroupWidget("attributes", this);
 	datas_w->setExclusive(false);
 	datas_w->addButton("distance", 1);
 	datas_w->addButton("elevation", 2);

@@ -3,6 +3,7 @@
 add_subdirectory(Tools)
 add_subdirectory(HttpClient)
 add_subdirectory(DataProvider)
+add_subdirectory(Widgets)
 
 qt6_add_executable(ActivityExplorer
     MANUAL_FINALIZATION
@@ -25,7 +26,6 @@ endforeach()
 endmacro()
 
 add_subdirectory(Map)
-add_subdirectory(Widgets)
 
 qt_add_qml_module(ActivityExplorer
     URI QmlForms
@@ -38,7 +38,6 @@ qt_add_qml_module(ActivityExplorer
 target_link_libraries(ActivityExplorer PUBLIC
     Qt6::Widgets
     Qt6::WebEngineWidgets
-    Qt6::Charts
     Qt6::Core
     Qt6::Gui
     Qt6::Location
@@ -49,6 +48,7 @@ target_link_libraries(ActivityExplorer PUBLIC
     Tools
     DataProvider
     HttpClient
+    Widgets
     #MapView
 )
 

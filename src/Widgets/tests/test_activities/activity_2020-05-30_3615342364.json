@@ -1,0 +1,63 @@
+{
+    "achievement_count": 2,
+    "athlete": {
+        "id": 61345806,
+        "resource_state": 1
+    },
+    "athlete_count": 1,
+    "average_speed": 4.202,
+    "comment_count": 0,
+    "commute": false,
+    "device_watts": false,
+    "display_hide_heartrate_option": false,
+    "distance": 49725.4,
+    "elapsed_time": 14284,
+    "elev_high": 88.9,
+    "elev_low": 38.6,
+    "end_latlng": [
+        52.621693,
+        10.076711
+    ],
+    "external_id": "stripped_health_data_61345806_1592159370.gpx",
+    "flagged": false,
+    "from_accepted_tag": false,
+    "gear_id": null,
+    "has_heartrate": false,
+    "has_kudoed": false,
+    "heartrate_opt_out": false,
+    "id": 3615342364,
+    "kudos_count": 0,
+    "location_city": null,
+    "location_country": "Germany",
+    "location_state": null,
+    "manual": false,
+    "map": {
+        "id": "a3615342364",
+        "resource_state": 2,
+        "summary_polyline": "q}m~Hqpwy@Gh@U?w@Y{AoAePaToDoGmFqLsBcCqCsEgDqHcFkOcFcLeBoBk@WgIXo@mE}A_H_A{PRoO_AsK}BkTgAeJO_Ak@?W}@oAiLyAaPaBi[mCg]q@mN[wBk@}NiAgNQeHeAuOuCak@m@uDcAwPk@qCkD_J{BaFcFiJcAkCoAwEq@wD}A{OwBgOs@aMSm@v@{D?kC{@sE[aEy@aGAwA]_DF[Og@mAQq@cDGcCYaCCiDdCeHd@cClDkLOg@wD}DqBiDaCgHw@eGEoB`@}G`CqSPoFf@yDLsCk@aBCeBRkKOoA\\]MJu@s@qB?ASgAE{DuA_Hk@yC}CcFqIUk@FOcDyG]uAyBqD}@aFkFuNeFwNgHeTaC{IoEsLwC_La@kC_K_YqCwFe@uBkGyO{FyP_A}A{C{Hq@aDO{BBiDUwBi@eDo@sBgEsGaAJoAlC[L{JaHmEeG_KiUiBeABoC[g@c@uEcAyEcBcMo@}Ia@}L_@uF]yBJi@rD[|B}@JQAc@oAgE_BoMOiCm@kDwDgMeCmFaBwEUkBkB_BeE_FwDuCAu@KMeAvB{FcCiGoDs@PcM}CaB{@kAaAYg@uAB{As@}BkBsCoDgIuPoAqDkAoByN_[iLwTaBwE}FeLm@yBuFsMkSya@sMoViAoDqJwQiHiQuMsWwA_Eg@aC_@}EOaOy@qIeAmUe@}QBu[c@}JsAcOiBeIyA}DmA{EiEkJsEsH{HyJa@mA_By@iEkEiAmBoHq]_BoNa@_QTsNpBqe@GqH[sEmAqHgCcKuPik@gGaRMeBo@s@uAkEqA{HaAaKaDkWkAyGeIkl@U]iBcIoIiQqAiAwF{BoAiAsAqBcB{F{AwO_BoGqBiEmFiKOo@R_@sByEyAgC{@eCgYon@{@eAkAuC_EgGySqTe@kA}[y\\kCqDkWsXkMgMaHaIw@a@m@mAcBmByUiV{NqOsXkZQY@[vCwBGkAcBoDs@c@w@IgAZsBzAs@A{@i@eUqU{S_UgLyM_UqUaJ}KgGuG_@_AgAw@w\\i^wBmDaF{NmCyEyFkFc@JwFeC_CaBaCiCqc@ut@wIaNmAcCc@qBEwGYoCc@yAsAkB_B]_FjAaDJ_[gTajB_a@u|@wQ{Bm@m@o@cAVqF{@iLaDoKiBou@eP}AcAYwAi@gAe@|@o@f@_BT}VaG{aAeSsFuAy@e@eCUsZ{QoNoJqEyByGsEsJqFiB@mGtAcBpB{BjFwAdCaCnBwAd@oGImEqAsC_@w@_@Ia@"
+    },
+    "max_speed": 7.9,
+    "moving_time": 11834,
+    "name": "Morning Ride",
+    "photo_count": 0,
+    "pr_count": 0,
+    "private": false,
+    "resource_state": 2,
+    "sport_type": "Ride",
+    "start_date": "2020-05-30T08:23:38Z",
+    "start_date_local": "2020-05-30T10:23:38Z",
+    "start_latlng": [
+        52.341532,
+        9.628413
+    ],
+    "timezone": "(GMT+01:00) Europe/Berlin",
+    "total_elevation_gain": 87.1,
+    "total_photo_count": 0,
+    "trainer": false,
+    "type": "Ride",
+    "upload_id": 3859545656,
+    "upload_id_str": "3859545656",
+    "utc_offset": 7200,
+    "visibility": "everyone",
+    "workout_type": null
+}

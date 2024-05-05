@@ -1,0 +1,63 @@
+{
+    "achievement_count": 0,
+    "athlete": {
+        "id": 61345806,
+        "resource_state": 1
+    },
+    "athlete_count": 1,
+    "average_speed": 3.289,
+    "comment_count": 0,
+    "commute": false,
+    "device_watts": false,
+    "display_hide_heartrate_option": false,
+    "distance": 8682.9,
+    "elapsed_time": 3070,
+    "elev_high": 69.1,
+    "elev_low": 51.2,
+    "end_latlng": [
+        52.3423,
+        9.73953
+    ],
+    "external_id": "stripped_health_data_61345806_1592159367.gpx",
+    "flagged": false,
+    "from_accepted_tag": false,
+    "gear_id": null,
+    "has_heartrate": false,
+    "has_kudoed": false,
+    "heartrate_opt_out": false,
+    "id": 3615341933,
+    "kudos_count": 0,
+    "location_city": null,
+    "location_country": "Germany",
+    "location_state": null,
+    "manual": false,
+    "map": {
+        "id": "a3615341933",
+        "resource_state": 2,
+        "summary_polyline": "_zm~Hkh_z@BUCF@IC[@MCC@OCSIMC_@JiAAUESGOUWC[@q@TeBNg@HQDQHmBCSGMKCmBFWCYQc@c@KYE]DOVm@De@KoDGgAIcGB}@F{@HM@IB?BKDCtBA^KZCT?@MBsACsHB_BGeDCeDM{GGeIGy@BMd@c@BCL?nBp@z@`@hCp@PB`AAdAHlGHr@B^AlAF^CjADdACdBJhFFnBFbDF`C@PENKfA_BzAiClBqDJOJIDDBECFAA?N@AAMA@@@~@@ZOZ]HAf@~@VZx@nAb@f@HBDAFq@PSLa@`@aCFi@XkA@MEMWi@Me@s@sAK[DGAA?EMLc@cA]o@q@iE]sECwAB{@LiBC{@EMOWYO_@EEYJkCJgBNsADq@LuAf@mEr@yIB}@CeBBaACwA@}@Cm@@qCEiC?uCEaC@_@BIC?FEGYQUOE_BV_@@kBGyCRiARmAP_A^{Av@y@\\}@p@aAv@YLKEI[EgAGm@BkAK[_@MUDYGi@Ee@MmAGs@SCFDBNEH?hALFC@EA_DBeDAsABmAE}F@_BG}A?{AEs@AuCBsACcDLaCB_AMqCI}@_@}Hs@aK_@qEMwBOg@Ga@?qACQAq@DSIkAKu@As@@kACqBByAAk@GSSSo@YKG_BmBcAu@WYc@Yi@k@IAo@gA}@cA[g@e@m@[Y_@g@Y[}@kBu@qBqAqEcAkCkAeG[aAYu@OWc@e@KCoANwA^QJGCEIB{@A_@Ig@MBCACEEC?CDAC@AVB^FB?DC@AEC?LAB@EDBNCJKUcTwt@MiACm@?[@MHO^WpCaA`Bc@\\O^KHIPGJBLPH@b@QxA_@^GX?NB`@GRBNCFE@E?KAAEB@d@@?FB"
+    },
+    "max_speed": 6.5,
+    "moving_time": 2640,
+    "name": "Afternoon Ride",
+    "photo_count": 0,
+    "pr_count": 0,
+    "private": false,
+    "resource_state": 2,
+    "sport_type": "Ride",
+    "start_date": "2020-04-12T12:09:07Z",
+    "start_date_local": "2020-04-12T14:09:07Z",
+    "start_latlng": [
+        52.340963,
+        9.668066
+    ],
+    "timezone": "(GMT+01:00) Europe/Berlin",
+    "total_elevation_gain": 20.4,
+    "total_photo_count": 0,
+    "trainer": false,
+    "type": "Ride",
+    "upload_id": 3859545446,
+    "upload_id_str": "3859545446",
+    "utc_offset": 7200,
+    "visibility": "everyone",
+    "workout_type": null
+}

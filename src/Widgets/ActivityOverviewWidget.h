@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ActivityOverviewModel.h>
+
 #include <QWidget>
 
 // Forwards
@@ -11,6 +13,8 @@ class ActivityOverviewWidget;
 namespace Widgets
 {
 
+
+
 class ActivityOverviewWidget : public QWidget
 {
 	Q_OBJECT
@@ -20,6 +24,7 @@ public:
 
 private:
 	Ui::ActivityOverviewWidget* ui;
+	ActivityOverviewModel _overview_model;
 };
 
 }

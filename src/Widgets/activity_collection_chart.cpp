@@ -1,7 +1,11 @@
 #include "ActivityCollectionChart.h"
 
+#include "ActivityOverviewModel.h"
+
+#include <QAbstractBarSeries>
 #include <QBarSeries>
 #include <QBarCategoryAxis>
+#include <QDate>
 #include <QValueAxis>
 #include <QStackedBarSeries>
 #include <QChart>
@@ -10,6 +14,11 @@
 
 namespace Widgets
 {
+
+namespace
+{
+
+}
 
 ActivityCollectionChart::ActivityCollectionChart(QWidget* parent) : QChartView(parent)
 {
@@ -26,6 +35,7 @@ ActivityCollectionChart::ActivityCollectionChart(QWidget* parent) : QChartView(p
 	QBarSet* runSet = new QBarSet("Run");
 	QBarSet* runSetElev = new QBarSet("Run Elevation");
 	QBarSet* walkSet = new QBarSet("Walk");
+
 	QBarSet* walkSetElev = new QBarSet("Walk Elevation");
 	QBarSet* bikeRideSet = new QBarSet("Bike Ride");
 	QBarSet* bikeRideSetElev = new QBarSet("Bike Ride Elevation");
@@ -52,10 +62,10 @@ ActivityCollectionChart::ActivityCollectionChart(QWidget* parent) : QChartView(p
 	series->append(walkSet);
 	series->append(bikeRideSet);
 
-	QStackedBarSeries* series_elev = new QStackedBarSeries();
+	QBarSeries* series_elev = new QBarSeries();
 	series_elev->append(runSetElev);
-	series_elev->append(walkSetElev);
-	series_elev->append(bikeRideSetElev);
+	//series_elev->append(walkSetElev);
+	//series_elev->append(bikeRideSetElev);
 
 	// Create a QChart and add the QBarSeries to it
 	_chart = new QChart();
@@ -114,6 +124,21 @@ ActivityCollectionChart::ActivityCollectionChart(QWidget* parent) : QChartView(p
 		});
 }
 
+void ActivityCollectionChart::updateChart(const ActivityOverviewModel& model)
+{
+	// Every QBarSeries/QStackedBarSeries represents one attribute
+	// Stacked -> use one QBarSet for each attribute and each ActivityType
+	
+	// Not stacked -> sum up attribute values for all ActivityType-s and use one QBarSet for each attribute
+	
+	// If grouped by day -> always stacked -> click opens activity
+	
+	for (auto attribute : model.getAttributes())
+	{
+		model.getStacked() ? addStackedBarSeries(attribute, model) : addSummedBarSeries(attribute, model);
+	}
+}
+
 void ActivityCollectionChart::mouseMoveEvent(QMouseEvent* event)
 {
 	QPointF point = mapToScene(event->pos());
@@ -124,6 +149,34 @@ void ActivityCollectionChart::mouseMoveEvent(QMouseEvent* event)
 
 
 	QChartView::mouseMoveEvent(event);
+}
+
+void ActivityCollectionChart::addSummedBarSeries(
+	Providers::ActivitySummary::ESummableAttribute attribute, const ActivityOverviewModel& model)
+{
+	// Create bar sets
+}
+
+/*
+* One BarSeries represents one attribute (e.g. Distance/ElevationGain)
+* Stacked: the BarSets of each activity type will be displayed on top of each other as different bars
+*/
+void ActivityCollectionChart::addStackedBarSeries(
+	Providers::ActivitySummary::ESummableAttribute attribute, const ActivityOverviewModel& model)
+{
+	// TODO create categories (years/months)
+
+
+
+
+	QVector<float> values;
+	for (const auto& act : model.getFilteredActivities())
+	{
+		values.push_back(act.getSummableAttribute(attribute));
+	}
+
+	QBarSet* set = new QBarSet("");
+
 }
 
 }
