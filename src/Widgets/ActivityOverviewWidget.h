@@ -24,7 +24,7 @@ public:
 
 private:
 	Ui::ActivityOverviewWidget* ui;
-	ActivityOverviewModel _overview_model;
+	ActivityOverviewModel* _overview_model;
 };
 
 }

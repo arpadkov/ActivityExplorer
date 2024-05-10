@@ -164,9 +164,22 @@ void ActivityCollectionChart::addSummedBarSeries(
 void ActivityCollectionChart::addStackedBarSeries(
 	Providers::ActivitySummary::ESummableAttribute attribute, const ActivityOverviewModel& model)
 {
-	// TODO create categories (years/months)
+	// Create a QBarCategoryAxis for the X axis and set the categories
+	QStringList categories = model.getCategories();
+	QBarCategoryAxis* axis_x = new QBarCategoryAxis();
+	axis_x->append(categories);
 
+	// Create QBarSet for each activity type
+	for (auto activity_type : model.getActivityTypes())
+	{
+		QString type_str = QVariant::fromValue(activity_type).toString();
+		QBarSet* type_set = new QBarSet(type_str);
 
+		// Append list of values (list by category) for the attribute
+		for (const auto& value : model.getValuesForAttributeByCategory(attribute, activity_type))
+			type_set->append(value);
+		
+	}
 
 
 	QVector<float> values;

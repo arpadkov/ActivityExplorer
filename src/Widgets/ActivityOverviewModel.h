@@ -2,7 +2,7 @@
 
 #include <Activity.h>
 
-#include <QDateTime>
+#include <QDate>
 #include <QObject>
 
 // Forwards
@@ -32,26 +32,44 @@ class ActivityOverviewModel : public QObject
 	Q_OBJECT
 
 public:
-	ActivityOverviewModel(QObject* parent = nullptr);
+	ActivityOverviewModel(const std::vector<Providers::ActivitySummary>& acts, QObject* parent = nullptr);
 	~ActivityOverviewModel();
+
+	void setGroupedBy(EActivityGroupedBy grouping);
+	void setDateRange(const QDate& from, const QDate& to);
 
 	std::vector<Providers::ActivitySummary::ESummableAttribute> getAttributes() const;
 	bool getStacked() const;
+
 	EActivityGroupedBy getGroupedBy() const;
 	QStringList getCategories() const;
+	std::vector<Providers::EActivityType> getActivityTypes() const;
+
+	std::vector<float> getValuesForAttributeByCategory(
+		Providers::ActivitySummary::ESummableAttribute attribute,
+		Providers::EActivityType) const;
 
 	std::vector<Providers::ActivitySummary> getFilteredActivities() const;
 
 private:
+	void recalculate();
+
+	std::vector<Providers::ActivitySummary> _acts;
 	std::vector<Providers::ActivitySummary> _filtered_acts;
 
-	QDateTime _from_date;
-	QDateTime _to_date;
+	QDate _from_date;
+	QDate _to_date;
 
 	std::vector<Providers::EActivityType> _types;
 	std::vector<Providers::ActivitySummary::ESummableAttribute> _attributes;
-	EActivityGroupedBy _grouped_by;
+	EActivityGroupedBy _grouped_by = EActivityGroupedBy::Unknown;
 	bool _stacked = true;
+
+	std::map<QString, std::vector<Providers::ActivitySummary>> _acts_by_category;
+
+Q_SIGNALS:
+	void modelChanged();	// This is used to notify the outside, once everything is recalculated
+
 };
 
 
