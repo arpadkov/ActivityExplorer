@@ -58,8 +58,8 @@ ActivityOverviewModel getTestOverviewModel()
 	return ActivityOverviewModel(acts, nullptr);
 }
 
-template <typename T>
-void testListsEqual(QList<T> lhv, QList<T> rhv)
+template<typename T>
+void testVectorsEqual(std::vector<T> lhv, std::vector<T> rhv)
 {
 	if (lhv.size() != rhv.size())
 		GTEST_FAIL();
@@ -71,51 +71,183 @@ void testListsEqual(QList<T> lhv, QList<T> rhv)
 TEST(TestActivityOverviewModel, TestYearCategories)
 {
 	auto model = getTestOverviewModel();
-	model.setGroupedBy(EActivityGroupedBy::Year);
+	auto grouped_by = EActivityGroupedBy::Year;
+	model.setGroupedBy(grouped_by);
+	model.setDateRange(QDate(2018, 01, 01), QDate(2024, 12, 31));
 
-	QStringList expected_year_categories = {"2018", "2019", "2020", "2021", "2022", "2023", "2024"};
+	std::vector<ActivityCategory> expected_year_categories =
+	{
+		ActivityCategory(QDate(2018, 01, 01), QDate(2018, 12, 31), grouped_by),
+		ActivityCategory(QDate(2019, 01, 01), QDate(2019, 12, 31), grouped_by),
+		ActivityCategory(QDate(2020, 01, 01), QDate(2020, 12, 31), grouped_by),
+		ActivityCategory(QDate(2021, 01, 01), QDate(2021, 12, 31), grouped_by),
+		ActivityCategory(QDate(2022, 01, 01), QDate(2022, 12, 31), grouped_by),
+		ActivityCategory(QDate(2023, 01, 01), QDate(2023, 12, 31), grouped_by),
+		ActivityCategory(QDate(2024, 01, 01), QDate(2024, 12, 31), grouped_by),
+	};
+
 	auto categories = model.getCategories();
 
-	testListsEqual<QString>(expected_year_categories.toList(), categories.toList());
+	testVectorsEqual<ActivityCategory>(expected_year_categories, categories);
 }
 
 TEST(TestActivityOverviewModel, TestMonthCategories)
 {
 	auto model = getTestOverviewModel();
-	model.setGroupedBy(EActivityGroupedBy::Month);
+	auto grouped_by = EActivityGroupedBy::Month;
+	model.setGroupedBy(grouped_by);
 	model.setDateRange(QDate(2022, 5, 1), QDate(2023, 9, 25));
 
-	QStringList expected_month_categories = {"2022-May", "2022-June", "2022-July", "2022-August", "2022-September",
-		"2022-October", "2022-November", "2022-December", "2023-January", "2023-February", "2023-March", "2023-April",
-		"2023-May", "2023-June", "2023-July", "2023-August", "2023-September"};
+	std::vector<ActivityCategory> expected_month_categories =
+	{
+		ActivityCategory(QDate(2022, 05, 01), QDate(2022, 05, 31), grouped_by),
+		ActivityCategory(QDate(2022, 6, 1), QDate(2022, 6, 30), grouped_by),
+		ActivityCategory(QDate(2022, 7, 1), QDate(2022, 7, 31), grouped_by),
+		ActivityCategory(QDate(2022, 8, 1), QDate(2022, 8, 31), grouped_by),
+		ActivityCategory(QDate(2022, 9, 1), QDate(2022, 9, 30), grouped_by),
+		ActivityCategory(QDate(2022, 10, 1), QDate(2022, 10, 31), grouped_by),
+		ActivityCategory(QDate(2022, 11, 1), QDate(2022, 11, 30), grouped_by),
+		ActivityCategory(QDate(2022, 12, 1), QDate(2022, 12, 31), grouped_by),
+		ActivityCategory(QDate(2023, 1, 1), QDate(2023, 1, 31), grouped_by),
+		ActivityCategory(QDate(2023, 2, 1), QDate(2023, 2, 28), grouped_by),
+		ActivityCategory(QDate(2023, 3, 1), QDate(2023, 3, 31), grouped_by),
+		ActivityCategory(QDate(2023, 4, 1), QDate(2023, 4, 30), grouped_by),
+		ActivityCategory(QDate(2023, 5, 1), QDate(2023, 5, 31), grouped_by),
+		ActivityCategory(QDate(2023, 6, 1), QDate(2023, 6, 30), grouped_by),
+		ActivityCategory(QDate(2023, 7, 1), QDate(2023, 7, 31), grouped_by),
+		ActivityCategory(QDate(2023, 8, 1), QDate(2023, 8, 31), grouped_by),
+		ActivityCategory(QDate(2023, 9, 1), QDate(2023, 9, 30), grouped_by)
+	};
+
 	auto categories = model.getCategories();
 
-	testListsEqual<QString>(expected_month_categories.toList(), categories.toList());
+	testVectorsEqual<ActivityCategory>(expected_month_categories, categories);
 }
 
 TEST(TestActivityOverviewModel, TestDayCategories)
 {
 	auto model = getTestOverviewModel();
-	model.setGroupedBy(EActivityGroupedBy::Day);
+	auto grouped_by = EActivityGroupedBy::Day;
+	model.setGroupedBy(grouped_by);
 	model.setDateRange(QDate(2023, 5, 28), QDate(2023, 6, 3));
 
-	QStringList expected_day_categories = { "May-28", "May-29", "May-30", "May-31", "June-01", "June-02", "June-03" };
+	std::vector<ActivityCategory> expected_day_categories =
+	{
+		ActivityCategory(QDate(2023, 5, 28), QDate(2023, 5, 28), grouped_by),
+		ActivityCategory(QDate(2023, 5, 29), QDate(2023, 5, 29), grouped_by),
+		ActivityCategory(QDate(2023, 5, 30), QDate(2023, 5, 30), grouped_by),
+		ActivityCategory(QDate(2023, 5, 31), QDate(2023, 5, 31), grouped_by),
+		ActivityCategory(QDate(2023, 6, 1), QDate(2023, 6, 1), grouped_by),
+		ActivityCategory(QDate(2023, 6, 2), QDate(2023, 6, 2), grouped_by),
+		ActivityCategory(QDate(2023, 6, 3), QDate(2023, 6, 3), grouped_by)
+	};
+
 	auto categories = model.getCategories();
 
-	testListsEqual<QString>(expected_day_categories.toList(), categories.toList());
+	for (int i = 0; i < categories.size(); i++)
+	{
+		qInfo() << expected_day_categories[i].toString(ECategoryStringFormat::Full);
+		qInfo() << categories[i].toString(ECategoryStringFormat::Full);
+	}
+
+	testVectorsEqual<ActivityCategory>(expected_day_categories, categories);
 }
 
-TEST(TestActivityOverviewModel, TestValuesForAttributeByCategory)
+TEST(TestActivityOverviewModel, TestActivitiesByCategory_Day)
 {
 	auto model = getTestOverviewModel();
 	model.setGroupedBy(EActivityGroupedBy::Day);
-	model.setDateRange(QDate(2023, 5, 28), QDate(2023, 6, 3));
+	model.setDateRange(QDate(2023, 3, 14), QDate(2023, 4, 15));
 
-	auto values = model.getValuesForAttributeByCategory(
-		ActivitySummary::ESummableAttribute::Distance, EActivityType::Run);
-	for (const auto& val : values)
-		qInfo() << val;
+	std::vector<int> expected_act_numbers_categories
+	{
+			0, // 2023-03-14
+			0, // 2023-03-15
+			0, // 2023-03-16
+			1, // 2023-03-17
+			1, // 2023-03-18
+			1, // 2023-03-19
+			3, // 2023-03-20
+			1, // 2023-03-21
+			4, // 2023-03-22
+			1, // 2023-03-23
+			1, // 2023-03-24
+			2, // 2023-03-25
+			1, // 2023-03-26
+			0, // 2023-03-27
+			0, // 2023-03-28
+			0, // 2023-03-29
+			0, // 2023-03-30
+			0, // 2023-03-31
+			0, // 2023-04-01
+			0, // 2023-04-02
+			0, // 2023-04-03
+			0, // 2023-04-04
+			0, // 2023-04-05
+			0, // 2023-04-06
+			0, // 2023-04-07
+			0, // 2023-04-08
+			0, // 2023-04-09
+			0, // 2023-04-10
+			0, // 2023-04-11
+			0, // 2023-04-12
+			1, // 2023-04-13
+			1, // 2023-04-14
+			0  // 2023-04-15
+	};
 
+	const auto& acts_by_categories = model.getActivitiesByCategory();
+	std::vector<int> act_numbers_categories;
+	for (const auto& acts : acts_by_categories)
+		act_numbers_categories.push_back(acts.second.size());
+
+	testVectorsEqual<int>(expected_act_numbers_categories, act_numbers_categories);
+}
+
+TEST(TestActivityOverviewModel, TestActivitiesByCategory_Month)
+{
+	auto model = getTestOverviewModel();
+	model.setGroupedBy(EActivityGroupedBy::Month);
+	model.setDateRange(QDate(2023, 3, 28), QDate(2023, 8, 3));
+
+	std::vector<int> expected_act_numbers_categories
+	{
+		0, // 2023-03-01 - 2023-03-31
+		15, // 2023-04-01 - 2023-04-30
+		19, // 2023-05-01 - 2023-05-31
+		12, // 2023-06-01 - 2023-06-30
+		11, // 2023-07-01 - 2023-07-31
+	};
+
+	const auto& acts_by_categories = model.getActivitiesByCategory();
+	std::vector<int> act_numbers_categories;
+	for (const auto& acts : acts_by_categories)
+		act_numbers_categories.push_back(acts.second.size());
+
+	testVectorsEqual<int>(expected_act_numbers_categories, act_numbers_categories);
+}
+
+TEST(TestActivityOverviewModel, TestActivitiesByCategory_Year)
+{
+	auto model = getTestOverviewModel();
+	model.setGroupedBy(EActivityGroupedBy::Year);
+	model.setDateRange(QDate(2020, 3, 28), QDate(2024, 8, 3));
+
+	std::vector<int> expected_act_numbers_categories
+	{
+		36, // 2020-01-01 - 2020-12-31
+		53, // 2021-01-01 - 2021-12-31
+		48, // 2022-01-01 - 2022-12-31
+		135, // 2023-01-01 - 2023-12-31
+		61, // 2024-01-01 - 2024-12-31
+	};
+
+	const auto& acts_by_categories = model.getActivitiesByCategory();
+	std::vector<int> act_numbers_categories;
+	for (const auto& acts : acts_by_categories)
+		act_numbers_categories.push_back(acts.second.size());
+
+	testVectorsEqual<int>(expected_act_numbers_categories, act_numbers_categories);
 }
 
 int main(int argc, char* argv[])

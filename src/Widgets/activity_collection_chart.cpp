@@ -135,7 +135,7 @@ void ActivityCollectionChart::updateChart(const ActivityOverviewModel& model)
 	
 	for (auto attribute : model.getAttributes())
 	{
-		model.getStacked() ? addStackedBarSeries(attribute, model) : addSummedBarSeries(attribute, model);
+		model.isStacked() ? addStackedBarSeries(attribute, model) : addSummedBarSeries(attribute, model);
 	}
 }
 
@@ -165,9 +165,10 @@ void ActivityCollectionChart::addStackedBarSeries(
 	Providers::ActivitySummary::ESummableAttribute attribute, const ActivityOverviewModel& model)
 {
 	// Create a QBarCategoryAxis for the X axis and set the categories
-	QStringList categories = model.getCategories();
-	QBarCategoryAxis* axis_x = new QBarCategoryAxis();
-	axis_x->append(categories);
+	// TODO: create category labels for ActivityCategory
+	//QStringList categories = model.getCategories();
+	//QBarCategoryAxis* axis_x = new QBarCategoryAxis();
+	//axis_x->append(categories);
 
 	// Create QBarSet for each activity type
 	for (auto activity_type : model.getActivityTypes())
