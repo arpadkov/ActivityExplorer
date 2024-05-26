@@ -66,8 +66,11 @@ public:
 	~ActivityOverviewModel();
 
 	// Setters
+	void setStacked(bool stacked);
 	void setGroupedBy(EActivityGroupedBy grouping);
 	void setDateRange(const QDate& from, const QDate& to);
+	void setActivityTypes(const std::vector<Providers::EActivityType>& types);
+	void setAttributes(const std::vector<Providers::ActivitySummary::ESummableAttribute>& attributes);
 
 	// Simple get methods
 	std::vector<Providers::ActivitySummary::ESummableAttribute> getAttributes() const;
@@ -79,9 +82,9 @@ public:
 	std::vector<ActivityCategory> getCategories() const;
 	std::map<ActivityCategory, std::vector<Providers::ActivitySummary>> getActivitiesByCategory() const;
 
-	std::vector<float> getValuesForAttributeByCategory(
+	std::vector<std::pair<ActivityCategory, float>> getValuesForAttributeByCategory(
 		Providers::ActivitySummary::ESummableAttribute attribute,
-		Providers::EActivityType) const;
+		Providers::EActivityType type) const;
 
 	std::vector<Providers::ActivitySummary> getFilteredActivities() const;
 

@@ -1,7 +1,5 @@
 #include "ActivityOverviewModel.h"
-#include "ActivityOverviewModel.h"
-#include "ActivityOverviewModel.h"
-#include "ActivityOverviewModel.h"
+
 
 #include <ActivityType.h>
 
@@ -103,6 +101,12 @@ ActivityOverviewModel::~ActivityOverviewModel()
 {
 }
 
+void ActivityOverviewModel::setStacked(bool stacked)
+{
+	_is_stacked = stacked;
+	recalculate();
+}
+
 void ActivityOverviewModel::setGroupedBy(EActivityGroupedBy grouping)
 {
 	_grouped_by = grouping;
@@ -113,6 +117,18 @@ void ActivityOverviewModel::setDateRange(const QDate& from, const QDate& to)
 {
 	_from_date = from;
 	_to_date = to;
+	recalculate();
+}
+
+void ActivityOverviewModel::setActivityTypes(const std::vector<Providers::EActivityType>& types)
+{
+	_types = types;
+	recalculate();
+}
+
+void ActivityOverviewModel::setAttributes(const std::vector<Providers::ActivitySummary::ESummableAttribute>& attributes)
+{
+	_attributes = attributes;
 	recalculate();
 }
 
@@ -166,12 +182,12 @@ const
 }
 
 /*
-* Gets the vector of values for a specific attribute, in the same order as the categories.
+* Gets the vector of values for a specific attribute, in the same order as the categories, for an act type
 * The values are summed up in each category
 */
-std::vector<float> ActivityOverviewModel::getValuesForAttributeByCategory(
+std::vector<std::pair<ActivityCategory, float>> ActivityOverviewModel::getValuesForAttributeByCategory(
 	Providers::ActivitySummary::ESummableAttribute attribute,
-	Providers::EActivityType) const
+	Providers::EActivityType type) const
 {
 	if (!isValid())
 	{
@@ -179,11 +195,25 @@ std::vector<float> ActivityOverviewModel::getValuesForAttributeByCategory(
 		return {};
 	}
 
-	std::vector<float> result;
+	std::vector<std::pair<ActivityCategory, float>> result;
 
-	for (const auto& act : _filtered_acts)
+	for (const auto& cat : _categories)
 	{
+		auto acts_in_cat = _acts_by_category.find(cat);
+		if (acts_in_cat == _acts_by_category.end())
+		{
+			qWarning() << "ActivityOverviewModel: did not find category, although it should exist";
+			continue;
+		}
 
+		float values_sum = 0;
+		for (const auto& act : acts_in_cat->second)
+		{
+			if (act.type == type)
+				values_sum += act.getSummableAttribute(attribute);
+		}
+
+		result.push_back({ cat, values_sum });
 	}
 
 	return result;
@@ -197,7 +227,12 @@ std::vector<Providers::ActivitySummary> ActivityOverviewModel::getFilteredActivi
 
 bool ActivityOverviewModel::isValid() const
 {
-	return _from_date.isValid() && _to_date.isValid() && _grouped_by != EActivityGroupedBy::Unknown;
+	return !_acts.empty() &&
+		_from_date.isValid() &&
+		_to_date.isValid() &&
+		_grouped_by != EActivityGroupedBy::Unknown &&
+		!_attributes.empty() &&
+		!_types.empty();
 }
 
 void ActivityOverviewModel::recalculate()
@@ -240,7 +275,7 @@ void ActivityOverviewModel::recalculate()
 	for (const auto& category : _categories)
 	{
 		optionalRecalcLog(QString("Category: %1").arg(category.toString(ECategoryStringFormat::Full)));
-		
+
 		std::vector<Providers::ActivitySummary> category_acts;
 		auto cat_indexes = getFirstAndLastActivityIndexOfCategory(first_act, category);
 		if (cat_indexes)
@@ -338,11 +373,11 @@ std::optional<int> ActivityOverviewModel::getFirstActivityIndexOfCategory(
 {
 	optionalRecalcLog(QString(" Looking for first act in %2 - %3").
 		arg(category.from_date.toString("yyyy-MM-dd"), category.to_date.toString("yyyy-MM-dd")));
-	
+
 	for (int index = start_at_act; index < _filtered_acts.size(); index++)
 	{
 		const auto& act_date = _filtered_acts.at(index).start_date.date();
-		
+
 		optionalRecalcLog(QString("  Act date: %1").
 			arg(act_date.toString("yyyy-MM-dd")));
 
@@ -374,7 +409,7 @@ std::optional<int> ActivityOverviewModel::getLastActivityIndexOfCategory(
 	for (int index = start_at_act; index < _filtered_acts.size(); index++)
 	{
 		const auto& act_date = _filtered_acts.at(index).start_date.date();
-		
+
 		optionalRecalcLog(QString("  Act date: %1").
 			arg(act_date.toString("yyyy-MM-dd")));
 

@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget* parent)
 {
 	ui->setupUi(this);
 
+	initilizeProvider();
+
 	QObject::connect(
 		ui->test_button, &QPushButton::clicked, this, &MainWindow::testFunction);
 
@@ -29,7 +31,7 @@ MainWindow::MainWindow(QWidget* parent)
 		});
 
 	// Confugre main tab widget
-	auto act_overview_w = new Widgets::ActivityOverviewWidget(this);
+	auto act_overview_w = new Widgets::ActivityOverviewWidget(_provider, this);
 	ui->tab_widget->addTab(act_overview_w, "Activities");
 
 }
@@ -37,6 +39,24 @@ MainWindow::MainWindow(QWidget* parent)
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+bool MainWindow::initilizeProvider()
+{
+	// TODO: Get configured provider
+	_provider = Providers::getDataProvider(Providers::STRAVA_CLIENT);
+	if (!_provider)
+	{
+		qWarning() << "MainWin: Could not get provider";
+		return false;
+	}
+	if (!_provider->initilizeProvider())
+	{
+		qWarning() << "MainWin: Could not initialize provider";
+		return false;
+	}
+
+	return true;
 }
 
 void MainWindow::testFunction()

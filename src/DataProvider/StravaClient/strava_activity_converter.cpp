@@ -106,7 +106,7 @@ std::optional<ActivitySummary> activitySummaryFromStravaReply(const NetworkReply
   act_summary.distance = reply.getFloatValue("distance").value_or(0);
   act_summary.moving_time = reply.getFloatValue("moving_time").value_or(0);
   act_summary.elapsed_time = reply.getFloatValue("elapsed_time").value_or(0);
-  act_summary.elev_gain = reply.getFloatValue("elev_gain").value_or(0);
+  act_summary.elev_gain = reply.getFloatValue("total_elevation_gain").value_or(0);
   act_summary.start_date = QDateTime::fromString(reply.getStringValue("start_date").value_or(""), Qt::ISODate);
   act_summary.average_speed = reply.getFloatValue("average_speed").value_or(0);
   act_summary.max_speed = reply.getFloatValue("max_speed").value_or(0);

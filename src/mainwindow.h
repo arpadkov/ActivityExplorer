@@ -22,6 +22,8 @@ public:
 	~MainWindow();
 
 private:
+	bool initilizeProvider();
+
 	Ui::MainWindow* ui;
 
 	std::shared_ptr<Providers::DataProvider> _provider;

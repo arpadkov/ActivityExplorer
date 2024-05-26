@@ -12,6 +12,8 @@ namespace Widgets
 class ActivityOverviewModel;
 }
 
+class QBarCategoryAxis;
+
 namespace Widgets
 {
 
@@ -21,8 +23,8 @@ class ActivityCollectionChart : public QChartView
 
 public:
 	ActivityCollectionChart(QWidget* parent = nullptr);
-	void updateChart(const ActivityOverviewModel& model);
 
+	void updateChart(const ActivityOverviewModel& model);
 protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 
@@ -34,6 +36,7 @@ private:
 
 	QChart* _chart;
 	std::vector<QBarSet*> _sets;
+	QBarCategoryAxis* _axis_x;
 };
 
 }

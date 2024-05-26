@@ -283,7 +283,6 @@ bool StravaClient::setAccessToken(const StravaCredential& credentials)
 			QString("Reply did not contain access token").toStdString());
 
 	_access_token = *access_token;
-	qInfo() << "ACCESS TOKEN: " << _access_token;
 	return true;
 }
 

@@ -79,7 +79,8 @@ DataProviderConfiguration::DataProviderConfiguration()
 {
 }
 
-DataProviderConfiguration::DataProviderConfiguration(const QString& configured_provider_) : _configured_provider(configured_provider_)
+DataProviderConfiguration::DataProviderConfiguration(const QString& configured_provider_) :
+	_configured_provider(configured_provider_)
 {
 }
 

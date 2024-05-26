@@ -44,6 +44,9 @@ struct ActivitySummary
 bool operator==(const ActivitySummary& lhs, const ActivitySummary& rhs);
 bool operator!=(const ActivitySummary& lhs, const ActivitySummary& rhs);
 
+QString activityTypeToString(EActivityType type);
+QString summableAttributeToString(ActivitySummary::ESummableAttribute attribute);
+
 Q_DECLARE_METATYPE(ActivitySummary)
 
 }
