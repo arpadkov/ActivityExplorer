@@ -1,4 +1,5 @@
 #include "ActivityOverviewModel.h"
+#include "ActivityOverviewModel.h"
 
 
 #include <ActivityType.h>
@@ -305,6 +306,8 @@ void ActivityOverviewModel::recalculateCategories()
 {
 	if (_filtered_acts.empty())
 		return;
+
+	_categories.clear();
 
 	QDate date = _from_date;
 	switch (_grouped_by)

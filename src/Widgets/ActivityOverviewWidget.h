@@ -26,11 +26,12 @@ class ActivityOverviewWidget : public QWidget
 
 public:
 	ActivityOverviewWidget(std::shared_ptr<Providers::DataProvider> provider, QWidget* parent = nullptr);
+	~ActivityOverviewWidget();
 
 private:
 	Ui::ActivityOverviewWidget* ui;
 	std::shared_ptr<Providers::DataProvider> _provider;
-	ActivityOverviewModel* _overview_model;
+	std::shared_ptr<ActivityOverviewModel> _overview_model;
 };
 
 }

@@ -12,31 +12,87 @@ ActivityCollectionChartConfig::ActivityCollectionChartConfig(QWidget* parent) : 
 	auto spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding);
 
 	// Activities widget
-	auto activities_w = new ButtonGroupWidget("activities", this);
-	activities_w->setExclusive(false);
-	activities_w->addButton("run", 1);
-	activities_w->addButton("hike", 2);
-	activities_w->addButton("walk", 3);
-	activities_w->addButton("ride", 4);
+	_activities_w = new ButtonGroupWidget("activities", this);
+	_activities_w->setExclusive(false);
+	addActivityTypeButton(Providers::EActivityType::Run);
+	addActivityTypeButton(Providers::EActivityType::Hike);
+	addActivityTypeButton(Providers::EActivityType::Walk);
+	addActivityTypeButton(Providers::EActivityType::Ride);
 
-	auto datas_w = new ButtonGroupWidget("attributes", this);
-	datas_w->setExclusive(false);
-	datas_w->addButton("distance", 1);
-	datas_w->addButton("elevation", 2);
-	datas_w->addButton("time", 3);
+	// Attrbitues widget
+	_attributes_w = new ButtonGroupWidget("attributes", this);
+	_attributes_w->setExclusive(false);
+	addAttributeButton(Providers::ActivitySummary::ESummableAttribute::Distance);
+	addAttributeButton(Providers::ActivitySummary::ESummableAttribute::ElevationGain);
+	addAttributeButton(Providers::ActivitySummary::ESummableAttribute::ElapsedTime);
 
 	auto layout = new QHBoxLayout(this);
-	layout->addWidget(activities_w);
+	layout->addWidget(_activities_w);
 	layout->addSpacerItem(spacer);
-	layout->addWidget(new CheckStackedButton(this));
 
-	layout->addWidget(datas_w);
+	_stacked_w = new CheckStackedButton(this);
+	layout->addWidget(_stacked_w);
+
+	layout->addWidget(_attributes_w);
 
 	setLayout(layout);
+
+	connect(_activities_w, &ButtonGroupWidget::checkedButtonChanged, this, [this]()
+		{
+			Q_EMIT activityTypesChanged();
+		});
+	connect(_attributes_w, &ButtonGroupWidget::checkedButtonChanged, this, [this]()
+		{
+			Q_EMIT attributesChanged();
+		});
+	connect(_stacked_w, &QPushButton::toggled, this, [this]()
+		{
+			Q_EMIT isStackedChanged();
+		});
 }
 
 ActivityCollectionChartConfig::~ActivityCollectionChartConfig()
 {
+}
+
+std::vector<Providers::ActivitySummary::ESummableAttribute> ActivityCollectionChartConfig::getAttributes() const
+{
+	std::vector<Providers::ActivitySummary::ESummableAttribute> res;
+	for (int attr_value : _attributes_w->getCheckedButtons())
+		res.push_back(Providers::ActivitySummary::ESummableAttribute(attr_value));
+
+	return res;
+}
+
+bool ActivityCollectionChartConfig::getIsStacked() const
+{
+	return _stacked_w->isChecked();
+}
+
+std::vector<Providers::EActivityType> ActivityCollectionChartConfig::getActivityTypes() const
+{
+	std::vector<Providers::EActivityType> res;
+	for (int attr_value : _activities_w->getCheckedButtons())
+		res.push_back(Providers::EActivityType(attr_value));
+
+	return res;
+}
+
+/*
+* Adds an attrbitue button, with the text and int value from the attribute
+*/
+void ActivityCollectionChartConfig::addAttributeButton(Providers::ActivitySummary::ESummableAttribute attribute)
+{
+	const auto& text = Providers::summableAttributeToString(attribute);
+	int value = static_cast<int>(attribute);
+	_attributes_w->addButton(text, value);
+}
+
+void ActivityCollectionChartConfig::addActivityTypeButton(Providers::EActivityType type)
+{
+	const auto& text = Providers::activityTypeToString(type);
+	int value = static_cast<int>(type);
+	_activities_w->addButton(text, value);
 }
 
 CheckStackedButton::CheckStackedButton(QWidget* parent) : QPushButton(parent)

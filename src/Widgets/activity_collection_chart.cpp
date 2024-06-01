@@ -7,6 +7,7 @@
 #include <QBarCategoryAxis>
 #include <QDate>
 #include <QValueAxis>
+#include <QLabel>
 #include <QStackedBarSeries>
 #include <QChart>
 #include <QColor>
@@ -23,12 +24,15 @@ namespace
 ActivityCollectionChart::ActivityCollectionChart(QWidget* parent) : QChartView(parent)
 {
 	//updateChart();
+
 	_chart = new QChart();
 	_chart->legend()->setAlignment(Qt::AlignBottom);
 	_chart->setAnimationOptions(QChart::SeriesAnimations);
 	_chart->setTheme(QChart::ChartThemeBlueIcy);
 	setChart(_chart);
 
+	_hover_label = new QLabel(this);
+	_hover_label->setText("HELLOO");
 
 	//QVector<int> runDistances = { 100, 120, 110, 105 };
 	//QVector<int> walkDistances = { 200, 220, 210, 215 };
@@ -113,10 +117,21 @@ ActivityCollectionChart::ActivityCollectionChart(QWidget* parent) : QChartView(p
 	//	});
 }
 
-void ActivityCollectionChart::updateChart(const ActivityOverviewModel& model)
+void ActivityCollectionChart::updateChart(std::shared_ptr<ActivityOverviewModel> model)
 {
+	if (!model)
+	{
+		qDebug() << "ActivityCollectionChart update called without model";
+		return;
+	}
+
+	// Clear chart
+	_chart->removeAllSeries();
+	for (auto ax : _chart->axes())
+		_chart->removeAxis(ax);
+
 	// Create a QBarCategoryAxis for the X axis and set the categories
-	const auto& categories = model.getCategories();
+	const auto& categories = model->getCategories();
 	QStringList categories_str;
 	for (const auto& cat : categories)
 		categories_str.push_back(cat.toString(ECategoryStringFormat::WithAddition));
@@ -131,15 +146,19 @@ void ActivityCollectionChart::updateChart(const ActivityOverviewModel& model)
 
 	// If grouped by day -> always stacked -> click opens activity
 
-	for (auto attribute : model.getAttributes())
+	for (auto attribute : model->getAttributes())
 	{
-		model.isStacked() ? addStackedBarSeries(attribute, model) : addSummedBarSeries(attribute, model);
+		model->isStacked() ? addStackedBarSeries(attribute, *model) : addSummedBarSeries(attribute, *model);
 	}
 }
 
 void ActivityCollectionChart::mouseMoveEvent(QMouseEvent* event)
 {
-	QPointF point = mapToScene(event->pos());
+	QPointF point_mapped = mapToScene(event->pos());
+	QPoint pos = event->pos();
+
+	_hover_label->move(pos);
+	_hover_label->setVisible(true);
 
 
 	//qInfo() << "MAPPED POINT: " << point;
@@ -163,7 +182,7 @@ void ActivityCollectionChart::addSummedBarSeries(
 	for (auto activity_type : model.getActivityTypes())
 	{
 		// Sum up the values from each activity type
-		const auto& values_by_category = model.getValuesForAttributeByCategory(attribute, activity_type);		
+		const auto& values_by_category = model.getValuesForAttributeByCategory(attribute, activity_type);
 		// To each category add the value for the type
 		for (int i = 0; i < values_by_category.size(); i++)
 			values[i] += values_by_category[i].second;

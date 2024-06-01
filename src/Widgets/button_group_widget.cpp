@@ -8,32 +8,17 @@ namespace Widgets
 ButtonGroupWidget::ButtonGroupWidget(const QString& title, QWidget* parent) : QGroupBox(parent)
 {
 	_bg = new QButtonGroup(this);
-
-	//auto year_b = new QPushButton("year", this);
-	//year_b->setCheckable(true);
-	//year_b->setFlat(true);
-	//year_b->setChecked(true);
-	//_bg->addButton(year_b, 1);
-
-	//auto month_b = new QPushButton("month", this);
-	//month_b->setCheckable(true);
-	//month_b->setFlat(true);
-	//_bg->addButton(month_b, 2);
-
-	//auto day_b = new QPushButton("day", this);
-	//day_b->setCheckable(true);
-	//day_b->setFlat(true);
-	//_bg->addButton(day_b, 3);
-
 	_layout = new QHBoxLayout(this);
-	//layout->addWidget(year_b);
-	//layout->addWidget(month_b);
-	//layout->addWidget(day_b);
 
 	setLayout(_layout);
 
 	setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 	setTitle(title);
+
+	QObject::connect(_bg, &QButtonGroup::buttonClicked, this, [this]()
+		{
+			Q_EMIT checkedButtonChanged();
+		});
 }
 
 ButtonGroupWidget::~ButtonGroupWidget()
@@ -52,11 +37,23 @@ void ButtonGroupWidget::addButton(const QString& text, int index)
 void ButtonGroupWidget::setCheckedButton(int index)
 {
 	_bg->button(index)->setChecked(true);
+	Q_EMIT checkedButtonChanged();
 }
 
 void ButtonGroupWidget::setExclusive(bool exclusive)
 {
 	_bg->setExclusive(exclusive);
+}
+
+std::vector<int> ButtonGroupWidget::getCheckedButtons() const
+{
+	std::vector<int> checked_buttons;
+	for (auto button : _bg->buttons())
+	{
+		if (button->isChecked())
+			checked_buttons.push_back(_bg->id(button));
+	}
+	return checked_buttons;
 }
 
 }
